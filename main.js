@@ -36,13 +36,17 @@ app.post('/users/', (req, res)=>{
 });
 
 app.post('/signup', (req, res)=>{
-    connection.query('SELECT correo FROM usuarios WHERE correo = ?',[req.body.correo], (error, result)=>{
+    connection.query('SELECT email FROM usuarios WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
+        if(result){
+            console.error("El usuario con el correo "+req.body.email+" ya está registrado")
+            res.send("error");
+        }
         if(error){
             console.error(error);
             res.status(500).end();
         }else{
-            connection.query('INSERT INTO usuario (nombre, apellidos, correo, contrasenia) VALUES (?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
+            connection.query('INSERT INTO users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
                 if(error){
                     console.error(error);
                     res.status(500).end();
