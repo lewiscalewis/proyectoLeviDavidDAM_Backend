@@ -62,7 +62,7 @@ app.post('/signup/', (req, res)=>{
 });
 
 app.post('/example', (req, res)=>{
-    res.send(req.body.example)
+    res.send(req.body)
     console.log("Este es el resultado: "+req.body.example)
 });
 
