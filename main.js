@@ -5,10 +5,10 @@ const app = express();
 var http = require('http').createServer(express);
 app.use(cors());
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: true }))
+//app.use(bodyParser.urlencoded({ extended: true }))
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
-//app.use(express.json());
+app.use(express.json());
 
 //#############################################################################################
 
