@@ -42,7 +42,7 @@ app.post('/signup/', (req, res)=>{
             console.error(error);
             res.status(500).end();
         } else {
-            console.log(req.body.email+" y "+result)
+            console.log(req.body+" y "+result)
             if(result == req.body.email) {
                 console.error("El usuario con el correo "+req.body.email+" ya está registrado")
                 res.send("mail_error");
