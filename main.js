@@ -35,27 +35,29 @@ app.post('/users/', (req, res)=>{
     
 });
 
-app.post('/signup', (req, res)=>{
+app.post('/signup/', (req, res)=>{
     connection.query('SELECT email FROM usuarios WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
-        if(result){
+        if(result == req.body.email){
             console.error("El usuario con el correo "+req.body.email+" ya está registrado")
-            res.send("error");
-        }
-        if(error){
-            console.error(error);
-            res.status(500).end();
+            res.send("mail_error");
         }else{
-            connection.query('INSERT INTO users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
-                if(error){
-                    console.error(error);
-                    res.status(500).end();
-                }else{
-                    console.log("Usuario creado!")
-                }
-            })
-            res.send(result);
+            if(error){
+                console.error(error);
+                res.status(500).end();
+            } else{
+                /*connection.query('INSERT INTO users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
+                    if(error){
+                        console.error(error);
+                        res.status(500).end();
+                    }else{
+                        console.log("Usuario creado!")
+                    }
+                })*/
+                res.send(/*result*/"Todo wachin");
+            }
         }
+    
     });
    
     
