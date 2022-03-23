@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 var http = require('http').createServer(express);
-var jsonParser = bodyParser.json()
+var jsonParser = body_parser.json()
 app.use(body_parser.urlencoded({extended:true}));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -38,7 +38,7 @@ app.post('/users/', (req, res)=>{
     
 });
 
-app.post('/signup/', (req, res)=>{
+app.post('/signup/', jsonParser, (req, res)=>{
     connection.query('SELECT email FROM Users WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
         if(error) {
