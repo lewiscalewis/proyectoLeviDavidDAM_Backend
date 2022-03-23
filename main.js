@@ -5,11 +5,10 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 var http = require('http').createServer(express);
-var jsonParser = body_parser.json()
-app.use(body_parser.urlencoded({extended:true}));
+app.use(body_parser.urlencoded({extended:false}));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(body_parser.json());
 
 //#############################################################################################
 
