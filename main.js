@@ -56,8 +56,10 @@ app.post('/signup/', (req, res)=>{
         }
     
     });
-   
-    
+});
+
+app.post('/example/', (req, res)=>{
+    res.send(req.body.example)
 });
 
 
