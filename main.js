@@ -37,7 +37,7 @@ app.post('/users/', (req, res)=>{
     
 });
 
-app.post('/signup/', jsonParser, (req, res)=>{
+app.post('/signup/', (req, res)=>{
     connection.query('SELECT email FROM Users WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
         if(error) {
