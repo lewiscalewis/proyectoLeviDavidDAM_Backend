@@ -4,8 +4,11 @@ const mysql = require('mysql');
 const app = express();
 var http = require('http').createServer(express);
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+//app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+//app.use(express.json());
 
 //#############################################################################################
 
