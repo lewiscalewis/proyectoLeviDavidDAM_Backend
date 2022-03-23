@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const app = express();
 var http = require('http').createServer(express);
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //#############################################################################################
@@ -58,7 +58,7 @@ app.post('/signup/', (req, res)=>{
     });
 });
 
-app.post('/example/', (req, res)=>{
+app.post('/example', (req, res)=>{
     res.send(req.body.example)
     console.log("Este es el resultado: "+req.body.example)
 });
