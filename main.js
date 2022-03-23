@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 var http = require('http').createServer(express);
+var jsonParser = bodyParser.json()
 app.use(body_parser.urlencoded({extended:true}));
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
@@ -65,9 +66,6 @@ app.post('/signup/', (req, res)=>{
    
     
 });
-
-
-
 
 
 //############################################################################################
