@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const app = express();
 var http = require('http').createServer(express);
 app.use(cors());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //#############################################################################################
