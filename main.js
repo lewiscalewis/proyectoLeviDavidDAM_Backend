@@ -60,6 +60,8 @@ app.post('/check-email', (req, res)=>{
                     console.error("El usuario con el correo "+req.body.email+" ya está registrado")
                     res.send("mail_error")
                  }
+            }else{
+                res.status(200).end()
             }
         }
     });
@@ -77,6 +79,8 @@ app.post('/check-username', (req, res)=>{
                     console.log("El nick del usuario ya está en uso")
                     res.send("username_error")
                 }
+            }else{
+                res.status(200).end()
             }
         }
     })
