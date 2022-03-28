@@ -35,39 +35,52 @@ app.post('/users/', (req, res)=>{
 });
 
 app.post('/signup/', (req, res)=>{
+    connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
+        if(error){
+            console.error(error)
+            res.status(500).end()
+        }else{
+            console.log(`Usuario ${req.body.username} creado correctamente`)
+            res.send("success")
+        }
+    })
+});
+
+app.post('/check-email', (req, res)=>{
     connection.query('SELECT email FROM Users WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
         if(error) {
-            console.error(error);
-            res.status(500).end();
-        } else {
+            console.error(error)
+            res.status(500).end()
+        }else {
             console.log(req.body.email+" y "+result+" y "+result[0])
             if(result.length > 0){
                 console.log(result[0].email)
                 if(result[0].email == req.body.email) {
                     console.error("El usuario con el correo "+req.body.email+" ya está registrado")
-                    res.send("mail_error");
+                    res.send("mail_error")
                  }
-            }else {
-                /*connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)'[req.body.nombre, req.body.apellido, req.body.correo, req.body.contraseña], (error, result)=>{
-                    if(error){
-                        console.error(error);
-                        res.status(500).end();
-                    }else{
-                        console.log("Usuario creado!")
-                    }
-                })*/
-                res.send(/*result*/"Todo wachin");
             }
         }
-    
     });
 });
 
-app.post('/example', (req, res)=>{
-    res.send(req.body)
-    console.log("Este es el resultado: "+req.body.example)
-});
+app.post('/check-username', (req, res)=>{
+    connection.query('SELECT username FROM Users WHERE username = ?',[req.body.username], (error1, result1)=>{
+        if(error1){
+            console.log(error1)
+            res.status(500).end()
+        }else{
+            if(result1.length > 0){
+                console.log(result1[0].username)
+                if(result1[0].username == req.body.username){
+                    console.log("El nick del usuario ya está en uso")
+                    res.send("username_error")
+                }
+            }
+        }
+    })
+})
 
 
 //############################################################################################
