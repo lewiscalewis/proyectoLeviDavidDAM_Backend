@@ -54,7 +54,6 @@ app.post('/check-email', (req, res)=>{
             console.error(error)
             res.status(500).end()
         }else {
-            console.log(req.body.email+" y "+result+" y "+result[0])
             if(result.length > 0){
                 console.log(result[0].email)
                 if(result[0].email == req.body.email) {
@@ -75,7 +74,6 @@ app.post('/check-username', (req, res)=>{
             res.status(500).end()
         }else{
             if(result1.length > 0){
-                console.log(result1[0].username)
                 if(result1[0].username == req.body.username){
                     console.log("El nick del usuario ya está en uso")
                     res.send("username_error")
