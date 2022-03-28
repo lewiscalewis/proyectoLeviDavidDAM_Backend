@@ -36,7 +36,7 @@ app.post('/users/', (req, res)=>{
 
 app.post('/signup/', (req, res)=>{
     console.log(`${req.body.name}, ${req.body.surname}, ${req.body.email}, ${req.body.password}`)
-    connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)',[req.body.name, req.body.surname, req.body.email, req.body.password], (error, result)=>{
+    connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)',[req.body.name, req.body.surname, req.body.email, req.body.password, req.body.username], (error, result)=>{
         if(error){
             console.error(error)
             res.status(500).end()
