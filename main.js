@@ -75,8 +75,6 @@ app.post('/check-username', (req, res)=>{
         }else{
             if(result1.length > 0){
                 if(result1[0].username == req.body.username){
-                    console.log(result1[0].username)
-                    console.log(req.body.username)
                     console.log("El nick del usuario ya está en uso")
                     res.send("username_error")
                 }
