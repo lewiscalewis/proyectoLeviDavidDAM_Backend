@@ -86,10 +86,6 @@ app.post('/login', (req, res) => {
         }else{
             if(result.length > 0) {
 
-                const payload = {
-                    check:  true
-                };
-
                 var currentdate = new Date(); 
                 var datetime = "Last Sync: " + currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
@@ -98,10 +94,14 @@ app.post('/login', (req, res) => {
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
 
-                const token = jwt.sign(payload, app.get('llave'), {
+                const payload = {
                     username: req.body.username,
                     password: req.body.password,
                     datetime: datetime,
+                    check:  true
+                };
+
+                const token = jwt.sign(payload, app.get('llave'), {
                     expiresIn: 1440
                 });
 
