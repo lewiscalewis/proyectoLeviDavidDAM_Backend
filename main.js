@@ -84,8 +84,8 @@ app.post('/login', (req, res) => {
             console.error(error)
             res.status(500).end()
         }else{
-            if(result[0] > 1) {
-                
+            if(result[0] > 0) {
+
                 const payload = {
                     check:  true
                 };
