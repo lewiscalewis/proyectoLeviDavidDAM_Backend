@@ -24,21 +24,29 @@ app.set('llave', config.llave);
 const rutasProtegidas = express.Router(); 
 rutasProtegidas.use((req, res, next) => {
     const token = req.headers['access-token'];
-	
-    if (token) {
-      jwt.verify(token, app.get('llave'), (err, decoded) => {      
-        if (err) {
-          return res.json({ mensaje: 'Token inválido' });    
-        } else {
-          req.decoded = decoded;    
-          next();
+    
+    connection.query('SELECT token FROM Users WHERE token = ?',[token], (error, result)=>{
+        if(error){
+            console.log(error)
+            res.status(500).end()
+        }else{
+            if(result.length > 0){
+                if (token == result[0].token) {
+                    jwt.verify(token, app.get('llave'), (err, decoded) => {      
+                      if (err) {
+                        return res.json({ mensaje: 'Token inválido' });    
+                      } else {
+                        req.decoded = decoded;    
+                        next();
+                      }
+                    });
+                }else{
+                    res.send("session_error")
+                }
+            }
         }
-      });
-    } else {
-      res.send({ 
-          mensaje: 'Token no proveído.' 
-      });
-    }
+    })
+    
  });
 
 //------------------------------------
