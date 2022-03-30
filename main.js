@@ -164,16 +164,15 @@ app.post('/check-username', (req, res)=>{
 
 /*Sample request*/
 app.post('/', (req, res)=>{
-    /*connection.query('SELECT U.token FROM levi.users U WHERE U.mail = ''+req.body.mail+'' AND 	U.password =''+req.body.password+''', (error, result)=>{
+    connection.query('SELECT * FROM Users WHERE username = ?',[req.body.username], (error, result)=>{
         if(error){
             console.error(error);
             res.status(500).end();
         }else{
             res.send(result);
         }
-    });*/
-    res.send("HOLA AMIGOS DE YOUTUBE")
-    
+    });
+   
 });
 
 
