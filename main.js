@@ -124,7 +124,7 @@ app.post('/login', (req, res) => {
                 })
                 res.send(token)
             } else {
-                res.send("Usuario o contraseña incorrectos")
+                res.send("login_error")
             }
         }
     })
