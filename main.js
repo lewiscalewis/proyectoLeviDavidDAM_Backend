@@ -7,6 +7,7 @@ var http = require('http').createServer(express);
 app.use(cors());
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
+var md5 = require('md5');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
@@ -172,15 +173,7 @@ app.post('/check-username', (req, res)=>{
 
 /*Sample request*/
 app.post('/', (req, res)=>{
-    connection.query('SELECT * FROM Users WHERE username = ?',[req.body.username], (error, result)=>{
-        if(error){
-            console.error(error);
-            res.status(500).end();
-        }else{
-            res.send(result);
-        }
-    });
-   
+    console.log(md5('ff'));
 });
 
 
