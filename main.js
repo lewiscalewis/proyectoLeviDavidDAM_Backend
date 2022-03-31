@@ -114,12 +114,13 @@ app.post('/login', (req, res) => {
                     expiresIn: 1440
                 });
 
-                connection.query('INSERT INTO Users (token) VALUES (?)',[token], (error1)=>{
+                connection.query('INSERT INTO Users (token) VALUES (?) WHERE username = ?',[token, req.body.username], (error1)=>{
                     if(error1){
                         console.error(error1)
                         res.status(500).end()
                     }else{
                         res.status(200).end()
+                        console.log(`Token: ${token} \ninsertado correctamente`)
                     }
                 })
                 res.send(token)
