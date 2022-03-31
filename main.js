@@ -173,7 +173,8 @@ app.post('/check-username', (req, res)=>{
 
 /*Sample request*/
 app.post('/', (req, res)=>{
-    console.log(md5('ff'));
+    console.log(md5('test'));
+    res.status(200).end();
 });
 
 
