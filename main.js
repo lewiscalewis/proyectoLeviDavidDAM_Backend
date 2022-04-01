@@ -179,7 +179,7 @@ app.post('/', (req, res)=>{
 });
 
 
-app.listen(11230, () => {
-    console.log('Levi,s app listen on port 11230');
+app.listen(80, () => {
+    console.log('Levi,s app listen on port 80');
 })
 
