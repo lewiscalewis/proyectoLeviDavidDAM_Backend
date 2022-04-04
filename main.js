@@ -74,6 +74,29 @@ app.post('/users/', (req, res)=>{
     
 });
 
+/*Devuelve un usuario con el USERNAME que recibe en el body.*/
+app.post('/user/', (req, res)=>{
+    connection.query('SELECT * FROM Users WHERE username = ?',[req.body.username], (error, result)=>{
+
+        if(error){
+	    console.log("Usuario NO encontrado")
+            console.error(error);
+            res.status(500).end();
+        }else{
+	    console.log("Usuario encontrado")
+            res.send(result);
+        }
+    });
+   
+    
+});
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
+
+
 app.post('/signup/', (req, res)=>{
     console.log(`${req.body.name}, ${req.body.surname}, ${req.body.email}, ${req.body.password}`)
     connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)',[req.body.name, req.body.surname, req.body.email, req.body.password, req.body.username], (error, result)=>{
