@@ -70,8 +70,6 @@ app.post('/users/', (req, res)=>{
             res.send(result);
         }
     });
-   
-    
 });
 
 app.post('/signup/', (req, res)=>{
@@ -93,7 +91,7 @@ app.post('/login', (req, res) => {
             console.error(error)
             res.status(500).end()
         }else{
-            if(result.length > 0) {
+            if(result[0].length > 0) {
 
                 var currentdate = new Date(); 
                 var datetime = "Last Sync: " + currentdate.getDate() + "/"
@@ -173,7 +171,7 @@ app.post('/check-username', (req, res)=>{
 //############################################################################################
 
 /*Sample request*/
-app.post('/', (req, res)=>{
+app.get('/', (req, res)=>{
     console.log(md5('test'));
     res.status(200).end();
 });
