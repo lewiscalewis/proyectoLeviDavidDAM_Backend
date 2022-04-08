@@ -111,43 +111,38 @@ app.post('/signup/', (req, res)=>{
 app.post('/login', (req, res) => {
     connection.query('SELECT password, username FROM Users  WHERE username = ? AND password = ?',[req.body.username, req.body.password], (error, result)=>{
         if(error){
-            console.error(error)
-            res.status(500).end()
+            res.send("login_error")
         }else{
-            if(result[0].length > 0) {
+            
+            var currentdate = new Date(); 
+            var datetime = "Last Sync: " + currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/" 
+            + currentdate.getFullYear() + " @ "  
+            + currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
 
-                var currentdate = new Date(); 
-                var datetime = "Last Sync: " + currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
+            const payload = {
+                username: req.body.username,
+                password: req.body.password,
+                datetime: datetime,
+                check:  true
+            };
 
-                const payload = {
-                    username: req.body.username,
-                    password: req.body.password,
-                    datetime: datetime,
-                    check:  true
-                };
+            const token = jwt.sign(payload, app.get('llave'), {
+                expiresIn: 1440
+            });
 
-                const token = jwt.sign(payload, app.get('llave'), {
-                    expiresIn: 1440
-                });
-
-                connection.query('UPDATE Users SET token = ? WHERE username = ?',[token, req.body.username], (error1)=>{
-                    if(error1){
-                        console.error(error1)
-                        res.status(500).end()
-                    }else{
-                        res.status(200).end()
-                        console.log(`Token: ${token} \ninsertado correctamente`)
-                    }
-                })
-                res.send(token)
-            } else {
-                res.send("login_error")
-            }
+            connection.query('UPDATE Users SET token = ? WHERE username = ?',[token, req.body.username], (error1)=>{
+                if(error1){
+                    console.error(error1)
+                    res.status(500).end()
+                }else{
+                    res.status(200).end()
+                    console.log(`Token: ${token} \ninsertado correctamente`)
+                }
+            })
+            res.send(token)
         }
     })
 })
