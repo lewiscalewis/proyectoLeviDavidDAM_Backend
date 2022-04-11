@@ -26,7 +26,7 @@ const rutasProtegidas = express.Router();
 rutasProtegidas.use((req, res, next) => {
     const token = req.headers['access-token'];
     
-    connection.query('SELECT token FROM Users WHERE token = ?',[token], (error, result)=>{
+    connection.query('SELECT token FROM Sessions WHERE token = ?',[token], (error, result)=>{
         if(error){
             console.log(error)
             res.status(500).end()
@@ -133,7 +133,7 @@ app.post('/login', (req, res) => {
                 expiresIn: 1440
             });
 
-            connection.query('UPDATE Users SET token = ? WHERE username = ?',[token, req.body.username], (error1)=>{
+            connection.query('INSERT INTO Sessions (date_start, token, username) VALUES (?, ?, ?)',[new Date(), token, req.body.username], (error1)=>{
                 if(error1){
                     console.error(error1)
                     res.status(500).end()
