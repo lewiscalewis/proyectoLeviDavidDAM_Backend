@@ -113,36 +113,40 @@ app.post('/login', (req, res) => {
         if(error){
             res.send("login_error")
         }else{
-            
-            var currentdate = new Date(); 
-            var datetime = "Last Sync: " + currentdate.getDate() + "/"
-            + (currentdate.getMonth()+1)  + "/" 
-            + currentdate.getFullYear() + " @ "  
-            + currentdate.getHours() + ":"  
-            + currentdate.getMinutes() + ":" 
-            + currentdate.getSeconds();
+            if(result[0].username == req.body.username && result[0].password == req.body.password){
+                var currentdate = new Date(); 
+                var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
 
-            const payload = {
-                username: req.body.username,
-                password: req.body.password,
-                datetime: datetime,
-                check:  true
-            };
+                const payload = {
+                    username: req.body.username,
+                    password: req.body.password,
+                    datetime: datetime,
+                    check:  true
+                };
 
-            const token = jwt.sign(payload, app.get('llave'), {
-                expiresIn: 1440
-            });
+                const token = jwt.sign(payload, app.get('llave'), {
+                    expiresIn: 1440
+                });
 
-            connection.query('INSERT INTO Sessions (date_start, token, username) VALUES (?, ?, ?)',[new Date(), token, req.body.username], (error1)=>{
-                if(error1){
-                    console.error(error1)
-                    res.status(500).end()
-                }else{
-                    res.status(200).end()
-                    console.log(`Token: ${token} \ninsertado correctamente`)
-                }
-            })
-            res.send(token)
+                connection.query('INSERT INTO Sessions (date_start, token, username) VALUES (?, ?, ?)',[new Date(), token, req.body.username], (error1)=>{
+                    if(error1){
+                        console.error(error1)
+                        res.status(500).end()
+                    }else{
+                        res.status(200).end()
+                        console.log(`Token: ${token} \ninsertado correctamente`)
+                    }
+                })
+                res.send(token)
+            }else{
+                res.status(500).end()
+            }
+        
         }
     })
 })
