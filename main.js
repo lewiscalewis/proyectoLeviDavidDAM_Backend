@@ -113,7 +113,7 @@ app.post('/login', (req, res) => {
         if(error){
             res.send("login_error")
         }else{
-            if(result[0].username == req.body.username && result[0].password == req.body.password){
+            if(result.length > 0){
                 var currentdate = new Date(); 
                 var datetime = "Last Sync: " + currentdate.getDate() + "/"
                 + (currentdate.getMonth()+1)  + "/" 
