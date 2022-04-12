@@ -137,7 +137,15 @@ app.post('/login', (req, res) => {
                 connection.query('INSERT INTO Sessions (date_start, token, username) VALUES (?, ?, ?)',[new Date(), token, req.body.username], (error1)=>{
                     if(error1){
                         console.error(error1)
-                        res.status(500).end()
+                        connection.query('UPDATE Sessions SET date_start = ?, token = ? WHERE username = ?',[new Date(), token, req.body.username], (error2)=>{
+                            if(error2){
+                                console.log(error2)
+                                res.status(500).end()
+                            }else{
+                                console.log("Update sobre session hecho!")
+                                res.status(200).end()
+                            }
+                        })
                     }else{
                         res.status(200).end()
                         console.log(`Token: ${token} \ninsertado correctamente`)
