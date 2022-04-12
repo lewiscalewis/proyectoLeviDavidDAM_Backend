@@ -23,23 +23,24 @@ let server = net.createServer()
 server.on('connection', function (socket) {
          // sesión de socket, http tiene respuesta de solicitud
     console.log('connection success')
+    //recibir datos
+
+    socket.setEncoding('utf8')
+    socket.on('data', function (data) {
+        console.log(data)
+    })
+
+    //respuesta
+
+    socket.write('nice to meet you')
+
+    socket.end('end...')
 })
 server.listen(80, function () {
     console.log('server start at 3000')
 })
 
-//recibir datos
 
-socket.setEncoding('utf8')
-socket.on('data', function (data) {
-    console.log(data)
-})
-
-//respuesta
-
-socket.write('nice to meet you')
-
-socket.end('end...')
 
 //
 
