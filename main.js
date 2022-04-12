@@ -17,16 +17,31 @@ var md5 = require('md5');
 
 //SOCKETS
 
-const io = require('socket.io')(http);
+let net = require('net')
+ 
+let server = net.createServer()
+server.on('connection', function (socket) {
+         // sesión de socket, http tiene respuesta de solicitud
+    console.log('connection success')
+})
+server.listen(80, function () {
+    console.log('server start at 3000')
+})
 
-io.on('connection', client => {
-  client.on('event', data => { 
-    console.log("EYYYYYYYYYYYYYYYYYYYY PERRA")
-   });
-  client.on('disconnect', () => { 
+//recibir datos
 
-   });
-});
+socket.setEncoding('utf8')
+socket.on('data', function (data) {
+    console.log(data)
+})
+
+//respuesta
+
+socket.write('nice to meet you')
+
+socket.end('end...')
+
+//
 
 //----------------------------------------------> SOCKECTS - FIN
 
