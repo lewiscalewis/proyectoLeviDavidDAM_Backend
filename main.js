@@ -14,6 +14,22 @@ var md5 = require('md5');
 
 //#############################################################################################
 
+
+//SOCKETS
+
+const io = require('socket.io')(app);
+
+io.on('connection', client => {
+  client.on('event', data => { 
+    console.log("EYYYYYYYYYYYYYYYYYYYY PERRA")
+   });
+  client.on('disconnect', () => { 
+
+   });
+});
+
+//----------------------------------------------> SOCKECTS - FIN
+
 // Clave para cifrado de JWT
 const config = {
 	llave : "proyectolevidaviddam"
