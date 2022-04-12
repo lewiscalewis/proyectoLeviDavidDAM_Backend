@@ -17,7 +17,7 @@ var md5 = require('md5');
 
 //SOCKETS
 
-const io = require('socket.io')(app);
+const io = require('socket.io')(http);
 
 io.on('connection', client => {
   client.on('event', data => { 
