@@ -109,6 +109,7 @@ app.post('/signup/', (req, res)=>{
 });
 
 app.post('/login', (req, res) => {
+    console.log(req.body.username+", "+req.body.password)
     connection.query('SELECT password, username FROM Users  WHERE username = ? AND password = ?',[req.body.username, req.body.password], (error, result)=>{
         if(error){
             res.send("login_error")
