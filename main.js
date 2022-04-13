@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
     console.log('socket is ready for connection');
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
+        io.emit(msg)
     });
 });
 
