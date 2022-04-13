@@ -23,14 +23,14 @@ var io = require('socket.io')(http, {
     }
 });
 
-io.on('connection',(socket)=>{
+
+io.on('connection', (socket) => {
     console.log('socket is ready for connection');
-    io.on('connection', (socket) => {
-        socket.on('chat message', (msg) => {
-          console.log('message: ' + msg);
-        });
-      });
-})
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+    });
+});
+
 
 http.listen(80, () => console.log('listen socket'));
 
