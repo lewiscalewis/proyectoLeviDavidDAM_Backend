@@ -204,6 +204,7 @@ app.post('/login', (req, res) => {
     })
 })
 
+//petición para comprobar mails PARAMETROS: email
 app.post('/check-email', (req, res)=>{
     connection.query('SELECT email FROM Users WHERE email = ?',[req.body.email], (error, result)=>{
         //HAY QUE AÑADIR CÓDIGO PARA GESTIONAR QUE NO SE SUBAN DOS CORREOS IGUALES COSHETUMADRE
@@ -224,6 +225,7 @@ app.post('/check-email', (req, res)=>{
     });
 });
 
+//petición para comprobar usuarios PARAMETROS: username
 app.post('/check-username', (req, res)=>{
     connection.query('SELECT username FROM Users WHERE username = ?',[req.body.username], (error1, result1)=>{
         if(error1){
