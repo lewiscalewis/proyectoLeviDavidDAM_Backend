@@ -25,25 +25,11 @@ var io = require('socket.io')(http, {
 
 io.on('connection',(socket)=>{
     console.log('socket is ready for connection');
-    socket.on('joinRoom', ({ ...roomObject }) => {
-        const user = userJoin(socket.id, roomObject.user.name, roomObject.room_uuid,roomObject.user.user_uuid);
-        socket.join(user.room);
-        socket.emit('message', 'Welcome to application'+user.username);
-        socket.broadcast
-            .to(user.room)
-            .emit(
-                'message',
-               `${user.username} has joined the call`
-            );
-        io.to(user.room).emit('roomUsers', {
-            room: user.room,
-            users: getRoomUsers(user.room)
+    io.on('connection', (socket) => {
+        socket.on('chat message', (msg) => {
+          console.log('message: ' + msg);
         });
-        io.to(user.room).emit('roomSettings', {
-            ...roomObject
-        });
-
-    })
+      });
 })
 
 http.listen(80, () => console.log('listen socket'));
