@@ -16,40 +16,32 @@ var md5 = require('md5');
 
 
 //SOCKETS
+var server = http.createServer(app);
+const socketio = require('socket.io');
+var io = socketio(server);
 
-let net = require('net')
+io.on('connection',(socket)=>{
+    console.log('socket is ready for connection');
+    socket.on('joinRoom', ({ ...roomObject }) => {
+        const user = userJoin(socket.id, roomObject.user.name, roomObject.room_uuid,roomObject.user.user_uuid);
+        socket.join(user.room);
+        socket.emit('message', 'Welcome to application'+user.username);
+        socket.broadcast
+            .to(user.room)
+            .emit(
+                'message',
+               `${user.username} has joined the call`
+            );
+        io.to(user.room).emit('roomUsers', {
+            room: user.room,
+            users: getRoomUsers(user.room)
+        });
+        io.to(user.room).emit('roomSettings', {
+            ...roomObject
+        });
 
-var client = net.connect(80, 'localhost');
-
-client.write('Hello from node.js');
-
-client.end();
-//-----------
- 
-let server = net.createServer()
-server.on('connection', function (socket) {
-         // sesión de socket, http tiene respuesta de solicitud
-    console.log('connection success')
-    //recibir datos
-
-    socket.setEncoding('utf8')
-    socket.on('data', function (data) {
-        console.log(data)
     })
-
-    //respuesta
-
-    socket.write('nice to meet you')
-
-    //socket.end('end...')
 })
-server.listen(80, function () {
-    console.log('server start at 3000')
-})
-
-
-
-//
 
 //----------------------------------------------> SOCKECTS - FIN
 
