@@ -25,11 +25,32 @@ var io = require('socket.io')(http, {
 
 
 io.on('connection', (socket) => {
+
     console.log('socket is ready for connection');
+
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg)
     });
+
+    socket.on('message', (data)=>{
+        socket.join(`${data.room}`);
+        //socket.to(data.socketId).emit('message', (data));
+        //socket.to(data.emisorSocketId).emit('message', (data));
+        io.to(`${data.room}`).emit('message', data);
+        if(data.message){
+            connection.query(
+                `INSERT INTO levi.room (emisorId, receptorId, message) 
+                 values ( ${data.emisorId}, ${data.receptorId}, ?)`,
+                 [data.message],
+                (err, response)=>{
+                    if(err) {
+                        console.log(err);
+                    }
+                });
+        }
+    });
+
 });
 
 
@@ -47,7 +68,7 @@ app.set('llave', config.llave);
 //MiddleWare seguridad token
 const rutasProtegidas = express.Router(); 
 rutasProtegidas.use((req, res, next) => {
-    const token = req.headers['access-token'];
+    const token = req.body.token;
     
     connection.query('SELECT token FROM Sessions WHERE token = ?',[token], (error, result)=>{
         if(error){
@@ -219,7 +240,25 @@ app.post('/check-username', (req, res)=>{
             }
         }
     })
-})
+});
+
+app.post('/items', rutasProtegidas, (req, res)=>{
+    connection.query(
+        `SELECT *
+        FROM MUSIC_ITEMS M
+            LEFT JOIN TRANSACTIONS T ON M.id_transaction = M.id_transaction
+            LEFT JOIN USERS U ON U.username = M.owner
+        WHERE
+            U.username = ?`, [], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.send(resp)
+        }
+    });
+});
 
 
 //############################################################################################
@@ -230,9 +269,9 @@ app.get('/', (req, res)=>{
     res.status(200).end();
 });
 
-/*
+
 app.listen(80, () => {
     console.log('Levi,s app listen on port 80');
 })
-*/
+
 
