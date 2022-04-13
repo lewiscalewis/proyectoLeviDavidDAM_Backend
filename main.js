@@ -249,7 +249,7 @@ app.post('/items', rutasProtegidas, (req, res)=>{
             LEFT JOIN TRANSACTIONS T ON M.id_transaction = M.id_transaction
             LEFT JOIN USERS U ON U.username = M.owner
         WHERE
-            U.username = ?`, [], (err, resp)=>
+            U.username = ?`, [req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
