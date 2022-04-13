@@ -242,6 +242,7 @@ app.post('/check-username', (req, res)=>{
     })
 });
 
+//petición para obtener items PARAMETROS: token, username
 app.post('/items', rutasProtegidas, (req, res)=>{
     connection.query(
         `SELECT *
