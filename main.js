@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
 });
 
 
-http.listen(80, () => console.log('listen socket'));
+//http.listen(80, () => console.log('listen socket'));
 
 //----------------------------------------------> SOCKECTS - FIN
 
