@@ -16,7 +16,7 @@ var md5 = require('md5');
 
 
 //SOCKETS
-/*
+
 let net = require('net')
 
 var client = net.connect(80, 'localhost');
@@ -46,7 +46,7 @@ server.on('connection', function (socket) {
 server.listen(80, function () {
     console.log('server start at 3000')
 })
-*/
+
 
 
 //
@@ -246,9 +246,9 @@ app.get('/', (req, res)=>{
     res.status(200).end();
 });
 
-
+/*
 app.listen(80, () => {
     console.log('Levi,s app listen on port 80');
 })
-
+*/
 
