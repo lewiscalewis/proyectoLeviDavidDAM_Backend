@@ -16,9 +16,12 @@ var md5 = require('md5');
 
 
 //SOCKETS
-var server = http.createServer(app);
-const socketio = require('socket.io');
-var io = socketio(server);
+var io = require('socket.io')(http, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+});
 
 io.on('connection',(socket)=>{
     console.log('socket is ready for connection');
