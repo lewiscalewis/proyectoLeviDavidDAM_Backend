@@ -28,8 +28,8 @@ io.on('connection', (socket) => {
 
     console.log('socket is ready for connection');
 
-    socket.on("join-room", (data)=> {
-        socket.join(data.room);
+    socket.on("join-room", (room)=> {
+        socket.join(room);
     });
 
     socket.on('chat message', (msg) => {
