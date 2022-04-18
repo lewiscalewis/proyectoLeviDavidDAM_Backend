@@ -89,7 +89,7 @@ rutasProtegidas.use((req, res, next) => {
                       }
                     });
                 }else{
-                    res.send("session_error")
+                    res.status(200).send("session_error")
                 }
             }
         }
@@ -114,7 +114,7 @@ app.post('/users/', (req, res)=>{
             console.error(error);
             res.status(500).end();
         }else{
-            res.send(result);
+            res.status(200).send(result);
         }
     });
 });
@@ -129,7 +129,7 @@ app.post('/user/', (req, res)=>{
             res.status(500).end();
         }else{
 	    console.log("Usuario encontrado")
-            res.send(result);
+            res.status(200).send(result);
         }
     });
 });
@@ -155,7 +155,7 @@ app.post('/chatID/', (req, res)=>{
         }else{
 	        if(result.length > 0){
                 console.log(result[0].id_chat);
-                res.send(result[0].id_chat);
+                res.status(200).send(result[0].id_chat);
             }else{
                 connection.query('INSERT INTO Chats (username1, username2) VALUES (?, ?)', [req.body.username1, req.body.username2], (error1, result1)=>{
                     if(error1){
@@ -190,7 +190,7 @@ app.post('/login', (req, res) => {
     console.log(req.body.username+", "+req.body.password)
     connection.query('SELECT password, username FROM Users  WHERE username = ? AND password = ?',[req.body.username, req.body.password], (error, result)=>{
         if(error){
-            res.send("login_error")
+            res.status(200).send("login_error")
         }else{
             if(result.length > 0){
                 var currentdate = new Date(); 
@@ -229,7 +229,7 @@ app.post('/login', (req, res) => {
                         console.log(`Token: ${token} \ninsertado correctamente`)
                     }
                 })
-                res.send(token)
+                res.status(200).send(token)
             }else{
                 res.status(500).end()
             }
@@ -250,7 +250,7 @@ app.post('/check-email', (req, res)=>{
                 console.log(result[0].email)
                 if(result[0].email == req.body.email) {
                     console.error("El usuario con el correo "+req.body.email+" ya está registrado")
-                    res.send("mail_error")
+                    res.status(200).send("mail_error")
                  }
             }else{
                 res.status(200).end()
@@ -269,7 +269,7 @@ app.post('/check-username', (req, res)=>{
             if(result1.length > 0){
                 if(result1[0].username == req.body.username){
                     console.log("El nick del usuario ya está en uso")
-                    res.send("username_error")
+                    res.status(200).send("username_error")
                 }
             }else{
                 res.status(200).end()
@@ -292,7 +292,7 @@ app.post('/items', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
-            res.send(resp)
+            res.status(200).send(resp)
         }
     });
 });
