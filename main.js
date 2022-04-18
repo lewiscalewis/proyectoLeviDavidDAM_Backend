@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
 
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
-        socket.to(chatRoom).emit('chat message', msg)
+        io.to(chatRoom).emit('chat message', msg)
     });
 });
 
