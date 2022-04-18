@@ -28,13 +28,16 @@ io.on('connection', (socket) => {
 
     console.log('socket is ready for connection');
 
+    socket.on("join-room", (data)=> {
+        socket.join(data.room);
+    });
+
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
         io.emit('chat message', msg)
     });
 
     socket.on('message', (data)=>{
-        socket.join(`${data.room}`);
         //socket.to(data.socketId).emit('message', (data));
         //socket.to(data.emisorSocketId).emit('message', (data));
         io.to(`${data.room}`).emit('message', data);
@@ -129,14 +132,41 @@ app.post('/user/', (req, res)=>{
             res.send(result);
         }
     });
-   
-    
 });
 
 
 //////////////////////////////////////////////////////////////////////////
 
+//desde esta petición obetnemos o creamos las salas de chat
+app.post('/chatID/', (req, res)=>{
+    connection.query(`SELECT id_chat
+        FROM Chats 
+        WHERE
+            (username1 = ? AND
+            username2 = ?) OR
+            (username1 = ? AND
+            username2 = ?)`,[req.body.username1, req.body.username2, req.body.username2, req.body.username1], (error, result)=>{
 
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+	        if(result.length > 0){
+                res.send(result[0].id_chat);
+            }else{
+                connection.query('INSERT INTO (username1, username2) Chats VALUES ?, ?', [req.body.username1, req.body.username2], (error1, result1)=>{
+                    if(error1){
+                        console.error(error);
+                        res.status(500).end();
+                    }else{
+                        console.log(`Chat con usuarios ${req.body.username1} y ${req.body.username2}`)
+                        res.status(200).end();
+                    }
+                });
+            }
+        }
+    });
+});
 
 
 app.post('/signup/', (req, res)=>{
