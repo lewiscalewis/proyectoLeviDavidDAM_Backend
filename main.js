@@ -26,34 +26,19 @@ var io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
 
+    let chatRoom;
+
     console.log('socket is ready for connection');
 
     socket.on("join-room", (room)=> {
         socket.join(room);
+        chatRoom = room;
     });
 
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
-        io.emit('chat message', msg)
+        io.to(chatRoom).emit('chat message', msg)
     });
-
-    socket.on('message', (data)=>{
-        //socket.to(data.socketId).emit('message', (data));
-        //socket.to(data.emisorSocketId).emit('message', (data));
-        io.to(`${data.room}`).emit('message', data);
-        if(data.message){
-            connection.query(
-                `INSERT INTO levi.room (emisorId, receptorId, message) 
-                 values ( ${data.emisorId}, ${data.receptorId}, ?)`,
-                 [data.message],
-                (err, response)=>{
-                    if(err) {
-                        console.log(err);
-                    }
-                });
-        }
-    });
-
 });
 
 
