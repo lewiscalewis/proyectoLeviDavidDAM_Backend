@@ -160,7 +160,7 @@ app.post('/chatID/', (req, res)=>{
                 connection.query('INSERT INTO (username1, username2) Chats VALUES (?, ?)', [req.body.username1, req.body.username2], (error1, result1)=>{
                     if(error1){
                         console.log("error al insertar");
-                        console.error(error);
+                        console.error(error1);
                         res.status(500).end();
                     }else{
                         console.log(`Chat con usuarios ${req.body.username1} y ${req.body.username2}`)
