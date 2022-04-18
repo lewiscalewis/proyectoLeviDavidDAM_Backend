@@ -32,6 +32,7 @@ io.on('connection', (socket) => {
 
     socket.on("join-room", (room)=> {
         socket.join(room);
+        console.log("Unido a sala "+room)
         chatRoom = room;
     });
 
