@@ -147,6 +147,7 @@ app.post('/chatID/', (req, res)=>{
             (username1 = ? AND
             username2 = ?)`,[req.body.username1, req.body.username2, req.body.username2, req.body.username1], (error, result)=>{
 
+        console.log(`Petición para ${req.body.username1} y ${req.body.username2}`)
         if(error){
             console.error(error);
             res.status(500).end();
