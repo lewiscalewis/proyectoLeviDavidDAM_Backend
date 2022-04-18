@@ -153,6 +153,7 @@ app.post('/chatID/', (req, res)=>{
             res.status(500).end();
         }else{
 	        if(result.length > 0){
+                console.log(result);
                 res.send(result[0].id_chat);
             }else{
                 connection.query('INSERT INTO (username1, username2) Chats VALUES ?, ?', [req.body.username1, req.body.username2], (error1, result1)=>{
