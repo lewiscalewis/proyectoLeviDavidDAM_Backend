@@ -26,8 +26,6 @@ var io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
 
-    let cRoom;
-
     console.log('socket is ready for connection');
 
     socket.on("start-room", (room)=>{
@@ -35,9 +33,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on("message", (room, msg)=> {
-        cRoom = room;
-        socket.join(room);
-        socket.to(cRoom).emit('chat message', msg)
+        socket.emit("start-room", room)
+        socket.to(room).emit('chat message', msg)
         console.log("Unido a sala "+room)
     });
 
