@@ -23,9 +23,9 @@ var io = require('socket.io')(http, {
     }
 });
 
-io.on('connection', (socket) => {
+let chat;
 
-    let chat;
+io.on('connection', (socket) => {
     console.log('socket is ready for connection');
 
     socket.on("start-room", room =>{
