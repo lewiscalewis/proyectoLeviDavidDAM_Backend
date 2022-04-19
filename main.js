@@ -30,17 +30,17 @@ io.on('connection', (socket) => {
 
     console.log('socket is ready for connection');
 
-    socket.on("join-room", (room)=> {
+    socket.on("start-room", (room)=>{
+        socket.join(room);
+    });
+
+    socket.on("message", (room, msg)=> {
         cRoom = room;
         socket.join(room);
+        socket.to(cRoom).emit('chat message', msg)
         console.log("Unido a sala "+room)
     });
 
-    socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
-        console.log(cRoom+" "+socket)
-        socket.to(cRoom).emit('chat message', msg)
-    });
 });
 
 
