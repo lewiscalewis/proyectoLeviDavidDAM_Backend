@@ -28,13 +28,13 @@ io.on('connection', (socket) => {
 
     console.log('socket is ready for connection');
 
-    socket.on("start-room", (room)=>{
-        socket.join(room);
+    io.on("start-room", (room)=>{
+        io.join(room);
     });
 
-    socket.on("message", (room, msg)=> {
-        socket.emit("start-room", room)
-        socket.to(room).emit('chat message', msg)
+    io.on("message", (room, msg)=> {
+        io.emit("start-room", room)
+        io.to(room).emit('chat message', msg)
         console.log("Unido a sala "+room)
     });
 
