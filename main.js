@@ -26,19 +26,20 @@ var io = require('socket.io')(http, {
 
 io.on('connection', (socket) => {
 
-    let chatRoom;
+    let cRoom;
 
     console.log('socket is ready for connection');
 
     socket.on("join-room", (room)=> {
+        cRoom = room;
         socket.join(room);
         console.log("Unido a sala "+room)
-        chatRoom = room;
     });
 
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
-        io.to(chatRoom).emit('chat message', msg)
+        console.log(cRoom+" "+socket)
+        socket.to(cRoom).emit('chat message', msg)
     });
 });
 
