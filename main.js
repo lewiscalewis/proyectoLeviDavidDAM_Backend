@@ -38,7 +38,7 @@ io.on('connection', (socket) => {
         socket.emit("start-room", chat);
         console.log(msg); // world
         socket.to(chat).emit("message", msg)
-        socket.emit("message", msg)
+        io.emit("message", msg)
     });
 
 });
