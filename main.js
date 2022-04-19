@@ -23,19 +23,21 @@ var io = require('socket.io')(http, {
     }
 });
 
-
 io.on('connection', (socket) => {
 
+    let chat;
     console.log('socket is ready for connection');
 
-    io.on("start-room", (room)=>{
-        io.join(room);
+    socket.on("start-room", room =>{
+        console.log(room)
+        socket.join(room)
+        chat = room;
     });
 
-    io.on("message", (room, msg)=> {
-        io.emit("start-room", room)
-        io.to(room).emit('chat message', msg)
-        console.log("Unido a sala "+room)
+    socket.on("message", (msg) => {
+        socket.emit("start-room", chat);
+        console.log(msg); // world
+        socket.to(chat).emit(msg)
     });
 
 });
