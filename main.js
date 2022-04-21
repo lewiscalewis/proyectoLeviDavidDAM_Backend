@@ -283,6 +283,23 @@ app.post('/items', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/find-users', rutasProtegidas, (req, res)=>{
+    let query = `SELECT *
+    FROM Users U
+    WHERE
+        U.username LIKE '%?%'`
+    connection.query(query, [req.body.username], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            console.log(query)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
 
 //############################################################################################
 
