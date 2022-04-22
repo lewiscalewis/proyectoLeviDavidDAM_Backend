@@ -12,7 +12,7 @@ var md5 = require('md5');
 //app.use(bodyParser.json())
 //app.use(express.json());
 const fileUpload = require('express-fileupload');
-app.use(fileUpload())
+
 //#############################################################################################
 
 
@@ -59,7 +59,7 @@ app.set('llave', config.llave);
 const rutasProtegidas = express.Router(); 
 rutasProtegidas.use((req, res, next) => {
     const token = req.body.token;
-    
+    fileUpload();
     connection.query('SELECT token FROM Sessions WHERE token = ?',[token], (error, result)=>{
         if(error){
             console.log(error)
