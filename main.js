@@ -343,6 +343,16 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
+app.post('/uploadFile', rutasProtegidas, (req, res)=>{ 
+	console.log(req.body.filecontent);
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
 
 
 
