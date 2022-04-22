@@ -338,7 +338,7 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
-app.post('/upload', (req, res) => {
+app.post('/upload',rutasProtegidas, (req, res) => {
 	
     if (req.files) {
         console.log(req.files.file);
