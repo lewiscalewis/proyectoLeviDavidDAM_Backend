@@ -288,7 +288,7 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
     let query = `SELECT *
     FROM Users U
     WHERE
-        U.username LIKE '%'+?+'%'`
+        U.username LIKE %?%`
     connection.query(query, [req.body.username], (err, resp)=>
     {
         if(err){
