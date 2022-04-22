@@ -11,11 +11,28 @@ var md5 = require('md5');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
-const fileUpload = require('express-fileupload');
 
+
+const fileUpload = require('express-fileupload');
+const multer = require('multer');
 app.use(fileUpload());
-	const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
 //#############################################################################################
+
+
+
+
+
+
 
 
 //SOCKETS
@@ -340,17 +357,13 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, '')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-    }
-});
 
 
-
+app.post('/testUpload', upload.single('file'), function(req,res) {
+    debug(req.file);
+    console.log('storage location is ', req.hostname +'/' + req.file.path);
+    return res.send(req.file);
+})
 
 
 app.post('/upload',rutasProtegidas, (req, res) => {
