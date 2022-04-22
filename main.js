@@ -375,19 +375,24 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
             }
         });
 
-        var file = fs.readFile("assets/image/"+image, 'binary');
-        var stat = fs.statSync("assets/image/"+image);
+        fs.readFile("assets/image/"+image, 'binary', function (err, data) {
+               if(err) {
+                   console.log('error', err);
+               }else{
+                    var stat = fs.statSync("assets/image/"+image);
 
-        res.writeHead(200, {
-            'Content-Type': 'image/*',
-            'Content-Length': stat.size,
-            'Content-Disposition': 'attachment; filename=your_file_name'
+                    res.writeHead(200, {
+                        'Content-Type': 'image/*',
+                        'Content-Length': stat.size,
+                        'Content-Disposition': 'attachment; filename=your_file_name'
+                    });
+                
+                    res.setHeader('Content-Length', stat.size);
+                    res.setHeader('Content-Type', 'image/*');
+                    res.setHeader('Content-Disposition', 'attachment; filename=sample');
+                    res.status(200).send(data)
+               }
         });
-    
-        res.setHeader('Content-Length', stat.size);
-        res.setHeader('Content-Type', 'image/*');
-        res.setHeader('Content-Disposition', 'attachment; filename=sample');
-        res.status(200).send(file)
 });
 
 
