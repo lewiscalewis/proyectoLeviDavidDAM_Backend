@@ -9,6 +9,7 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 var md5 = require('md5');
 const multer = require('multer'); 
+var fs = require('fs');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
@@ -349,9 +350,9 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
-app.post('/image', upload.single('image'), (req, res)=> {
+app.post('/image', rutasProtegidas, upload.single('image'), (req, res)=> {
     console.log(req.file)
-    connection.query('UPDATE Users SET profileimage = ?',[req.file.filename], (err, response)=>{
+    connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
             res.status(500).end();
@@ -361,15 +362,36 @@ app.post('/image', upload.single('image'), (req, res)=> {
     });
 });
 
-app.post('/uploadFile', rutasProtegidas, (req, res)=>{ 
-	console.log(req.body.filecontent);
+app.post('/getImage', rutasProtegidas, (req, res)=>{ 
         if(err){
             console.log(err)
             res.status(500).end()
         }else{
-            res.status(200).send(resp)
-        }
-    
+            var image;
+            connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.file.username], (err, response)=>{
+                if(err){
+                    console.log(req.file.filename)
+                    res.status(500).end();
+                }else{
+                    image = response;
+                }
+            });
+
+            var file = fs.readFile(image, 'binary');
+            var stat = fs.statSync(image);
+
+            res.writeHead(200, {
+                'Content-Type': 'image/*',
+                'Content-Length': stat.size,
+                'Content-Disposition': 'attachment; filename=your_file_name'
+            });
+        
+            res.setHeader('Content-Length', stat.size);
+            res.setHeader('Content-Type', 'image/*');
+            res.setHeader('Content-Disposition', 'attachment; filename=sample');
+            res.status(200).send(file, 'binary')
+        }  
+        
 });
 
 
