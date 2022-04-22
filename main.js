@@ -387,7 +387,7 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
         res.setHeader('Content-Length', stat.size);
         res.setHeader('Content-Type', 'image/*');
         res.setHeader('Content-Disposition', 'attachment; filename=sample');
-        res.status(200).send(file, 'binary')
+        res.status(200).send(file)
 });
 
 
