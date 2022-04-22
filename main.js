@@ -340,7 +340,7 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 app.post('/upload', (req, res) => {
     if (req.files) {
-        // console.log(req.files);
+        console.log(req.files);
         let file = req.files.file;
         let filename = file.name;
  	
