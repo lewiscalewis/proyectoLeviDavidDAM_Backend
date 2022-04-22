@@ -300,6 +300,40 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/get-contacts', rutasProtegidas, (req, res)=>{ 
+    connection.query(`SELECT C.id_chat
+    FROM Chats C
+    WHERE
+        username1 = ? OR
+        username2 = ? `, [req.body.username], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
+app.post('/find-contact', rutasProtegidas, (req, res)=>{ 
+    connection.query(`SELECT C.id_chat
+    FROM Chats C
+    WHERE
+        username1 = ? AND
+        username2 = ? OR
+        username1 = ? AND
+        username2 = ?`, [req.body.username1, req.body.username2, req.body.username2, req.body.username1], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
 
 //############################################################################################
 //Test upload file.
