@@ -301,6 +301,55 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
 
 
 //############################################################################################
+//Test upload file.
+
+app.post('/upload', (req, res) => {
+    if (req.files) {
+        // console.log(req.files);
+        let file = req.files.file;
+        let filename = file.name;
+ 
+        // checking file size.
+        // max size - 10 mb aprox.
+        if (file.size > 10048576) {
+            res.status(413).send('Payload too large');
+        }
+ 
+        //Todo - Other validations like file type etc are skipped for brevity.
+ 
+        // using the mv() method to save the uploaded file in the
+        // 'uploads' folder.
+        file.mv('./uploads/' + filename, function (error) {
+            if (error) {
+                // console.log(error);
+                res.status(500).json({ message: 'Error while uploading file' });
+            } else {
+                res.json({
+                    message: 'File uploaded successfully',
+                    data: {
+                        name: filename,
+                        mimetype: file.mimetype,
+                        size: file.size
+                    }
+                });
+            }
+        });
+    } else {
+        return res.status(400).send({ message: 'No file uploaded' });
+    }
+});
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
 
 /*Sample request*/
 app.get('/', (req, res)=>{
