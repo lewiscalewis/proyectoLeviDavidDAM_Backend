@@ -359,7 +359,7 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 
 
-app.post('/testUpload', upload.single('file'), function(req,res) {
+rutasProtegidas.post('/testUpload', upload.single('file'), function(req,res) {
     debug(req.file);
     console.log('storage location is ', req.hostname +'/' + req.file.path);
     return res.send(req.file);
