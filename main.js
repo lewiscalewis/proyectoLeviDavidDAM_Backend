@@ -377,16 +377,17 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
                         console.log('error', err);
                     }else{
                          var stat = fs.statSync("assets/images/"+image);
-     
-                         res.writeHead(200, {
-                             'Content-Type': 'image/*',
-                             'Content-Length': stat.size,
-                             'Content-Disposition': 'attachment; filename=your_file_name'
-                         });
                      
                          res.setHeader('Content-Length', stat.size);
                          res.setHeader('Content-Type', 'image/*');
                          res.setHeader('Content-Disposition', 'attachment; filename=sample');
+
+                         res.writeHead(200, {
+                            'Content-Type': 'image/*',
+                            'Content-Length': stat.size,
+                            'Content-Disposition': 'attachment; filename=your_file_name'
+                        });
+
                          res.status(200).send(data)
                     }
              });
