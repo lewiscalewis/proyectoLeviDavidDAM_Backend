@@ -372,11 +372,11 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
                 res.status(500).end();
             }else{
                 image = response[0].profileimage;
-                fs.readFile("assets/image/"+image, 'binary', function (err, data) {
+                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
                     if(err) {
                         console.log('error', err);
                     }else{
-                         var stat = fs.statSync("assets/image/"+image);
+                         var stat = fs.statSync("assets/images/"+image);
      
                          res.writeHead(200, {
                              'Content-Type': 'image/*',
