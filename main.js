@@ -309,7 +309,13 @@ app.post('/upload', (req, res) => {
         // console.log(req.files);
         let file = req.files.file;
         let filename = file.name;
- 
+ 	
+	    
+	console.log(filename);
+	    
+	    
+	    
+	    
         // checking file size.
         // max size - 10 mb aprox.
         if (file.size > 10048576) {
