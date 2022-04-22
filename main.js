@@ -196,7 +196,7 @@ app.post('/login', (req, res) => {
                 };
 
                 const token = jwt.sign(payload, app.get('llave'), {
-                    expiresIn: 1440
+                    expiresIn: (3600*24)
                 });
 
                 connection.query('INSERT INTO Sessions (date_start, token, username) VALUES (?, ?, ?)',[new Date(), token, req.body.username], (error1)=>{
