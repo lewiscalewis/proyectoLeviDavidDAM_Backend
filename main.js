@@ -12,8 +12,9 @@ var md5 = require('md5');
 //app.use(bodyParser.json())
 //app.use(express.json());
 const fileUpload = require('express-fileupload');
+
 app.use(fileUpload());
-	
+	const upload = multer({ storage: storage });
 //#############################################################################################
 
 
@@ -338,6 +339,19 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 //############################################################################################
 //Test upload file.
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+
+
+
+
 
 app.post('/upload',rutasProtegidas, (req, res) => {
 	
