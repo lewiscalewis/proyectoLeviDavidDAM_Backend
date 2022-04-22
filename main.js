@@ -288,7 +288,7 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
     connection.query(`SELECT *
         FROM Users U
         WHERE
-        U.username LIKE CONCAT(%,?,%)`, [req.body.username], (err, resp)=>
+        U.username LIKE ?`, ['%'+req.body.username+'%'], (err, resp)=>
     {
         if(err){
             console.log(err)
