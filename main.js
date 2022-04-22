@@ -361,6 +361,17 @@ app.post('/image', upload.single('image'), (req, res)=> {
     });
 });
 
+app.post('/uploadFile', rutasProtegidas, (req, res)=>{ 
+	console.log(req.body.filecontent);
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    
+});
+
 
 
 
@@ -384,6 +395,6 @@ app.get('/', (req, res)=>{
 
 app.listen(80, () => {
     console.log('Levi,s app listen on port 80');
-})
+});
 
 
