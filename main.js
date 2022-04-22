@@ -366,7 +366,7 @@ rutasProtegidas.post('/testUpload', upload.single('file'), function(req,res) {
 })
 
 
-app.post('/upload',rutasProtegidas, (req, res) => {
+rutasProtegidas.use('/upload',rutasProtegidas, (req, res, next) => {
 	
     if (req.files) {
         console.log(req.files.file);
@@ -376,10 +376,11 @@ app.post('/upload',rutasProtegidas, (req, res) => {
         let filename = file.name;
  	
 	    
+	    
 	console.log(filename);
 	    
 	    
-	    
+	
 	    
         // checking file size.
         // max size - 10 mb aprox.
@@ -404,11 +405,13 @@ app.post('/upload',rutasProtegidas, (req, res) => {
                         size: file.size
                     }
                 });
+		   next();
             }
         });
     } else {
         return res.status(400).send({ message: 'No file uploaded' });
     }
+	next();
 });
 
 
