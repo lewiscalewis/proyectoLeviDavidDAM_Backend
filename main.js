@@ -367,7 +367,7 @@ app.post('/uploadFile', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
-            res.status(200).send("hola")
+            res.status(200).send(req.body.filecontent)
         }
     
 });
