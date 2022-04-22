@@ -11,6 +11,7 @@ var md5 = require('md5');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
+const fileUpload = require('express-fileupload');
 
 //#############################################################################################
 
