@@ -367,31 +367,31 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
-            var image;
-            connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.file.username], (err, response)=>{
-                if(err){
-                    console.log(req.file.filename)
-                    res.status(500).end();
-                }else{
-                    image = response;
-                }
-            });
 
-            var file = fs.readFile(image, 'binary');
-            var stat = fs.statSync(image);
+        var image;
+        connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.file.username], (err, response)=>{
+            if(err){
+                console.log(req.file.filename)
+                res.status(500).end();
+            }else{
+                image = response;
+            }
+        });
 
-            res.writeHead(200, {
-                'Content-Type': 'image/*',
-                'Content-Length': stat.size,
-                'Content-Disposition': 'attachment; filename=your_file_name'
-            });
-        
-            res.setHeader('Content-Length', stat.size);
-            res.setHeader('Content-Type', 'image/*');
-            res.setHeader('Content-Disposition', 'attachment; filename=sample');
-            res.status(200).send(file, 'binary')
-        }  
-        
+        var file = fs.readFile(image, 'binary');
+        var stat = fs.statSync(image);
+
+        res.writeHead(200, {
+            'Content-Type': 'image/*',
+            'Content-Length': stat.size,
+            'Content-Disposition': 'attachment; filename=your_file_name'
+        });
+    
+        res.setHeader('Content-Length', stat.size);
+        res.setHeader('Content-Type', 'image/*');
+        res.setHeader('Content-Disposition', 'attachment; filename=sample');
+        res.status(200).send(file, 'binary')
+    }  
 });
 
 
