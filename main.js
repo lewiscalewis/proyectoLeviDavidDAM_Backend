@@ -350,7 +350,7 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
-app.post('/image', rutasProtegidas, upload.single('image'), (req, res)=> {
+app.post('/image', upload.single('image'), rutasProtegidas, (req, res)=> {
     console.log(req.file)
     connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
