@@ -8,6 +8,7 @@ app.use(cors());
 var bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 var md5 = require('md5');
+const multer = require('multer'); 
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
@@ -15,11 +16,16 @@ var md5 = require('md5');
 //#############################################################################################
 
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './assets/images')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${(new Date().getTime())}_${file.originalname}`);
+    }
+  });
 
-
-
-
-
+var upload = multer({ storage: storage })
 
 //SOCKETS
 var io = require('socket.io')(http, {
@@ -343,7 +349,17 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 
-
+app.post('/image', upload.single('image'), (req, res)=> {
+    console.log(req.file)
+    connection.query('UPDATE Users SET profileimage = ?',[req.file.filename], (err, response)=>{
+        if(err){
+            console.log(req.file.filename)
+            res.status(500).end();
+        }else{
+            res.send('Completed task');
+        }
+    });
+});
 
 
 
