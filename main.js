@@ -351,7 +351,7 @@ app.post('/uploadFile', rutasProtegidas, (req, res)=>{
         }else{
             res.status(200).send(resp)
         }
-    });
+    
 });
 
 
