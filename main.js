@@ -363,11 +363,6 @@ app.post('/image', rutasProtegidas, upload.single('image'), (req, res)=> {
 });
 
 app.post('/getImage', rutasProtegidas, (req, res)=>{ 
-        if(err){
-            console.log(err)
-            res.status(500).end()
-        }else{
-
         var image;
         connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.file.username], (err, response)=>{
             if(err){
@@ -391,7 +386,6 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
         res.setHeader('Content-Type', 'image/*');
         res.setHeader('Content-Disposition', 'attachment; filename=sample');
         res.status(200).send(file, 'binary')
-    }  
 });
 
 
