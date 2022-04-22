@@ -352,7 +352,7 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 app.post('/image', rutasProtegidas, upload.single('image'), (req, res)=> {
     console.log(req.file)
-    connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',["assets/images/"+req.file.filename, req.body.username], (err, response)=>{
+    connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
             res.status(500).end();
@@ -363,10 +363,12 @@ app.post('/image', rutasProtegidas, upload.single('image'), (req, res)=> {
 });
 
 app.post('/getImage', rutasProtegidas, (req, res)=>{ 
+        
         var image;
+
         connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
             if(err){
-                console.log(req.file.filename)
+                console.log(err)
                 res.status(500).end();
             }else{
                 image = response;
