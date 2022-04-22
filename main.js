@@ -366,7 +366,7 @@ rutasProtegidas.post('/testUpload', upload.single('file'), function(req,res) {
 })
 
 
-rutasProtegidas.post('/upload',rutasProtegidas, (req, res, next) => {
+app.post('/upload',rutasProtegidas, (req, res, next) => {
 	
     if (req.files) {
         console.log(req.files.file);
