@@ -366,7 +366,7 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
         
         var image;
 
-        connection.query('SELECT imageprofile FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
+        connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
             if(err){
                 console.log(err)
                 res.status(500).end();
