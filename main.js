@@ -360,25 +360,35 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/friend-request', rutasProtegidas, (req, res)=>{ 
-    connection.query(`INSERT INTO
-    Friend_Requests
-    (emisor, receptor)
-    VALUES
-        (?,
-        ?)
-    WHERE 
-        receptor NOT IN (
-            SELECT receptor 
-            FROM Friend_Requests
-            WHERE emisor = ?)`, [req.body.emisor, req.body.receptor, req.body.emisor], (err, resp)=>
-    {
-        if(err){
-            console.log(err)
-            res.status(500).end()
-        }else{
-            res.status(200).end()
-        }
+    
+    connection.query(`SELECT receptor 
+        FROM Friend_Requests
+        WHERE emisor = ?`, [req.body.emisor], (e, r)=>{
+            if(e){
+                console.error(e)
+                res.status(500).end()
+            }else{
+                if(r.length > 0){
+                    res.status(200).send("request_error")
+                }else{
+                    connection.query(`INSERT INTO
+                    Friend_Requests
+                    (emisor, receptor)
+                    VALUES
+                        (?,
+                        ?)`, [req.body.emisor, req.body.receptor], (err, resp)=>
+                    {
+                        if(err){
+                            console.log(err)
+                            res.status(500).end()
+                        }else{
+                            res.status(200).end()
+                        }
+                    });
+                }
+            }
     });
+
 });
 
 
