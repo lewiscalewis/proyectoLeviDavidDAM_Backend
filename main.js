@@ -359,6 +359,33 @@ app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/add-friend', rutasProtegidas, (req, res)=>{ 
+    connection.query(`
+    INSERT INTO Chats
+    (username1, username2) 
+    VALUES (?, ?)`, [req.body.username1, req.body.username2], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).end()
+        }
+    });
+});
+
+app.post('/decline-request', rutasProtegidas, (req, res)=>{ 
+    connection.query(`DELETE FROM Friend_Requests WHERE emisor = ? AND receptor = ?`, [req.body.emisor, req.body.receptor], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).end()
+        }
+    });
+});
+
 app.post('/get-friend-requests', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT *
     FROM Friend_Requests F
