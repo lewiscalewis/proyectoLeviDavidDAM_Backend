@@ -330,7 +330,25 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
     FROM Chats C
     WHERE
         username1 = ? OR
-        username2 = ?`, [req.body.username], (err, resp)=>
+        username2 = ?`, [req.body.username, req.body.username], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
+app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{ 
+    connection.query(`SELECT C.id_chat
+    FROM Chats C
+    WHERE
+        username1 = ? OR
+        username2 = ? AND
+        username1 LIKE ? OR
+        username2 LIKE ?`, [req.body.username, req.body.username, "%"+req.body.friend+"%", "%"+req.body.friend+"%"], (err, resp)=>
     {
         if(err){
             console.log(err)
