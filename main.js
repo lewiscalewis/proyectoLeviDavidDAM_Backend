@@ -336,6 +336,7 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
+            console.log(resp)
             res.status(200).send(resp)
         }
     });
@@ -354,6 +355,7 @@ app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
+            console.log(resp)
             res.status(200).send(resp)
         }
     });
