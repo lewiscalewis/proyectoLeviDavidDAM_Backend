@@ -283,8 +283,7 @@ app.post('/items', rutasProtegidas, (req, res)=>{
     connection.query(
         `SELECT *
         FROM Items M
-            LEFT JOIN Transaction T ON T.item_id = M.id
-            LEFT JOIN Users U ON U.username = M.owner
+            INNER JOIN Users U ON U.username = M.owner
         WHERE
             U.username = ?`, [req.body.username], (err, resp)=>
     {
@@ -301,7 +300,21 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
     connection.query(`SELECT *
         FROM Users U
         WHERE
-        U.username LIKE ?`, ['%'+req.body.username+'%'], (err, resp)=>
+            U.username LIKE ? AND
+            U.username != ? AND 
+            U.username NOT IN (
+                SELECT username1
+                FROM Chats C
+                WHERE
+                    username1 = ? OR
+                    username2 = ?) AND
+            U.username NOT IN (
+                SELECT username2
+                FROM Chats C
+                WHERE
+                    username1 = ? OR
+                    username2 = ?
+            )`, ['%'+req.body.username+'%', req.body.me, req.body.me, req.body.me], (err, resp)=>
     {
         if(err){
             console.log(err)
@@ -317,7 +330,7 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
     FROM Chats C
     WHERE
         username1 = ? OR
-        username2 = ? `, [req.body.username], (err, resp)=>
+        username2 = ?`, [req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
@@ -336,6 +349,22 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
         username2 = ? OR
         username1 = ? AND
         username2 = ?`, [req.body.username1, req.body.username2, req.body.username2, req.body.username1], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
+app.post('/friend-request', rutasProtegidas, (req, res)=>{ 
+    connection.query(`INSERT INTO
+    Friend_Requests
+    VALUES
+        (emisor = ?
+        receptor = ?)`, [req.body.emisor, req.body.receptor], (err, resp)=>
     {
         if(err){
             console.log(err)
@@ -396,20 +425,6 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
 });
 
 
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-/*Sample request*/
 app.get('/', (req, res)=>{
     console.log(md5('test'));
     res.status(200).end();
