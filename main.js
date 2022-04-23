@@ -347,12 +347,15 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
 
 app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT *
-    FROM Chats C
-    WHERE
-        C.username1 LIKE ? AND
-        C.username2 = ? OR
-        C.username2 LIKE ? AND
-        C.username1 = ?`, ["%"+req.body.friend+"%", req.body.username, "%"+req.body.friend+"%", req.body.username], (err, resp)=>
+    FROM Users U
+    JOIN (  SELECT SELECT IF(C.username1 = ?, username2, username1) as username
+            FROM Chats C
+            WHERE
+                C.username1 LIKE ? AND
+                C.username2 = ? OR
+                C.username2 LIKE ? AND
+                C.username1 = ?) as C
+    ON U.username = C.username`, ["%"+req.body.friend+"%", req.body.username, "%"+req.body.friend+"%", req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
