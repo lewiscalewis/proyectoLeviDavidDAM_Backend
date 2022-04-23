@@ -326,7 +326,7 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/get-contacts', rutasProtegidas, (req, res)=>{ 
-    connection.query(`SELECT C.id_chat
+    connection.query(`SELECT *
     FROM Chats C
     WHERE
         username1 = ? OR
@@ -343,13 +343,13 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{ 
-    connection.query(`SELECT C.id_chat
+    connection.query(`SELECT *
     FROM Chats C
     WHERE
-        username1 = ? OR
-        username2 = ? AND
-        username1 LIKE ? OR
-        username2 LIKE ?`, [req.body.username, req.body.username, "%"+req.body.friend+"%", "%"+req.body.friend+"%"], (err, resp)=>
+        C.username1 LIKE ? AND
+        C.username2 = ? OR
+        C.username2 LIKE ? AND
+        C.username1 = ?`, ["%"+req.body.friend+"%", req.body.username, "%"+req.body.friend+"%", req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
