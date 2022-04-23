@@ -326,6 +326,7 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/get-contacts', rutasProtegidas, (req, res)=>{ 
+    console.log("EXISTO")
     connection.query(`SELECT *
     FROM Chats C
     WHERE
