@@ -326,12 +326,14 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/get-contacts', rutasProtegidas, (req, res)=>{ 
-    console.log("EXISTO")
-    connection.query(`SELECT *
-    FROM Chats C
-    WHERE
-        username1 = ? OR
-        username2 = ?`, [req.body.username, req.body.username], (err, resp)=>
+    connection.query(`
+    SELECT * FROM Users U
+    JOIN (SELECT IF(C.username1 = ?, username2, username1) as username
+        FROM Chats C 
+        WHERE
+            username1 = ? OR
+            username2 = ?) as C
+        ON U.username = C.username`, [req.body.username, req.body.username, req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
