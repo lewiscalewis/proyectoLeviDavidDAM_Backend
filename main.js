@@ -361,8 +361,8 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 app.post('/friend-request', rutasProtegidas, (req, res)=>{ 
     connection.query(`INSERT INTO
-    Friend_Requests F
-    (F.emisor, F.receptor)
+    Friend_Requests
+    (emisor, receptor)
     VALUES
         (?,
         ?)
