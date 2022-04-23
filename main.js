@@ -348,7 +348,7 @@ app.post('/get-contacts', rutasProtegidas, (req, res)=>{
 app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT *
     FROM Users U
-    JOIN (  SELECT SELECT IF(C.username1 = ?, username2, username1) as username
+    JOIN (  SELECT IF(C.username1 = ?, username2, username1) as username
             FROM Chats C
             WHERE
                 C.username1 LIKE ? AND
