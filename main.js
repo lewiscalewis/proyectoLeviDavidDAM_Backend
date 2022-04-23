@@ -355,7 +355,7 @@ app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{
                 C.username2 = ? OR
                 C.username2 LIKE ? AND
                 C.username1 = ?) as C
-    ON U.username = C.username`, ["%"+req.body.friend+"%", req.body.username, "%"+req.body.friend+"%", req.body.username], (err, resp)=>
+    ON U.username = C.username`, [req.body.username,"%"+req.body.friend+"%", req.body.username, "%"+req.body.friend+"%", req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
