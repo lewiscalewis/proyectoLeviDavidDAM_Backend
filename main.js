@@ -361,11 +361,16 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 app.post('/friend-request', rutasProtegidas, (req, res)=>{ 
     connection.query(`INSERT INTO
-    Friend_Requests
-    (emisor, receptor)
+    Friend_Requests F
+    (F.emisor, F.receptor)
     VALUES
         (?,
-        ?)`, [req.body.emisor, req.body.receptor], (err, resp)=>
+        ?)
+    WHERE 
+        F.receptor NOT IN (
+            SELECT receptor 
+            FROM Friend_Requests
+            WHERE emisor = ?)`, [req.body.emisor, req.body.receptor, req.body.emisor], (err, resp)=>
     {
         if(err){
             console.log(err)
