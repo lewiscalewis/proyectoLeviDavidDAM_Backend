@@ -314,7 +314,7 @@ app.post('/find-users', rutasProtegidas, (req, res)=>{
                 WHERE
                     username1 = ? OR
                     username2 = ?
-            )`, ['%'+req.body.username+'%', req.body.me, req.body.me, req.body.me], (err, resp)=>
+            )`, ['%'+req.body.username+'%', req.body.me, req.body.me, req.body.me, req.body.me, req.body.me], (err, resp)=>
     {
         if(err){
             console.log(err)
