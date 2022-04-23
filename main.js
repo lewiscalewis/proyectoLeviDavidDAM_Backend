@@ -367,7 +367,7 @@ app.post('/friend-request', rutasProtegidas, (req, res)=>{
         (?,
         ?)
     WHERE 
-        F.receptor NOT IN (
+        receptor NOT IN (
             SELECT receptor 
             FROM Friend_Requests
             WHERE emisor = ?)`, [req.body.emisor, req.body.receptor, req.body.emisor], (err, resp)=>
