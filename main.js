@@ -370,7 +370,7 @@ app.post('/friend-request', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
-            res.status(200).send(resp)
+            res.status(200).end()
         }
     });
 });
