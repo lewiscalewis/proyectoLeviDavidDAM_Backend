@@ -359,6 +359,21 @@ app.post('/get-contacts-filter', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/get-friend-requests', rutasProtegidas, (req, res)=>{ 
+    connection.query(`SELECT *
+    FROM Friend_Requests F
+    WHERE
+        receptor = ?`, [req.body.username, req.body.username], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
 app.post('/find-contact', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT C.id_chat
     FROM Chats C
