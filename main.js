@@ -140,7 +140,7 @@ app.post('/user/', (req, res)=>{
 //////////////////////////////////////////////////////////////////////////
 
 //desde esta petición obetnemos o creamos las salas de chat
-app.post('/chatID/', (req, res)=>{
+app.post('/chatID/', rutasProtegidas, (req, res)=>{
     connection.query(`SELECT id_chat
         FROM Chats 
         WHERE
