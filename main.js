@@ -47,12 +47,11 @@ io.on('connection', (socket) => {
         chat = room;
     });
 
-    socket.on("message", (msg, chat) => {
+    socket.on("message", (msg) => {
         socket.emit("start-room", chat);
         console.log(msg+" en sala "+chat); // world
-        io.to(chat).emit("message", msg, chat)
-        socket.to(chat).emit("message", msg, chat)
-        socket.emit("message", msg, chat)
+        io.to(chat).emit("message", msg)
+        socket.to(chat).emit("message", msg)
     });
 
 });
