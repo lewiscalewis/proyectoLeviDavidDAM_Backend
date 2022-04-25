@@ -16,6 +16,8 @@ var fs = require('fs');
 
 //#############################################################################################
 
+let chat;
+
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -35,8 +37,6 @@ var io = require('socket.io')(http, {
       methods: ["GET", "POST"]
     }
 });
-
-let chat;
 
 io.on('connection', (socket) => {
     console.log('socket is ready for connection');
@@ -156,6 +156,7 @@ app.post('/chatID/', rutasProtegidas, (req, res)=>{
         }else{
 	        if(result.length > 0){
                 console.log(result[0].id_chat);
+                chat = result[0].id_chat;
                 res.status(200).send((result[0].id_chat).toString());;
             }else{
                 connection.query('INSERT INTO Chats (username1, username2) VALUES (?, ?)', [req.body.username1, req.body.username2], (error1, result1)=>{
