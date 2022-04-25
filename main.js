@@ -52,6 +52,7 @@ io.on('connection', (socket) => {
         console.log(msg+" en sala "+chat); // world
         io.to(chat).emit("message", msg)
         socket.to(chat).emit("message", msg)
+        socket.emit("message", msg)
     });
 
 });
