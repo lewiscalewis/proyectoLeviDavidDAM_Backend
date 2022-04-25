@@ -51,8 +51,6 @@ io.on('connection', (socket) => {
         socket.emit("start-room", chat);
         console.log(msg+" en sala "+chat); // world
         io.to(chat).emit("message", msg)
-        socket.to(chat).emit("message", msg)
-        socket.emit("message", msg)
     });
 
 });
