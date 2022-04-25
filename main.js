@@ -50,8 +50,8 @@ io.on('connection', (socket) => {
     socket.on("message", (msg, chat) => {
         socket.emit("start-room", chat);
         console.log(msg+" en sala "+chat); // world
-        io.to(chat).emit("message", msg)
-        socket.to(chat).emit("message", msg)
+        io.to(chat).emit("message", msg, chat)
+        socket.to(chat).emit("message", msg, chat)
     });
 
 });
