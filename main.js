@@ -477,7 +477,7 @@ app.post('/image', upload.single('image'), rutasProtegidas, (req, res)=> {
 });
 
 app.post('/getImage', rutasProtegidas, (req, res)=>{ 
-        
+        console.log("/getImage called")
         var image;
 
         connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
