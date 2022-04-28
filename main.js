@@ -429,11 +429,18 @@ app.post('/decline-request', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/set-notifications', rutasProtegidas, (req, res)=>{ 
-    connection.query(`UDPATE Chats SET last_message = ? WHERE id = ?`, [req.body.notification, req.body.chat], (err, resp)=>
+    connection.query(`INSERT INTO Notifications VALUES(?, ?, ?)`, [req.body.receptor, req.body.emisor, req.body.notification], (err, resp)=>
     {
         if(err){
             console.log(err)
-            res.status(500).end()
+            connection.query(`UPDATE Notifications SET notifications = ? WHERE emisor = ? AND receptor = ?`, [req.body.notification, req.body.emisor, req.body.receptor], (err1, res1)=>{
+                if(err1){
+                    console.log(err1);
+                    res.status(500).end();
+                }else{
+                    res.status(200).end();
+                }
+            })
         }else{
             res.status(200).end()
         }
@@ -441,13 +448,13 @@ app.post('/set-notifications', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/get-notifications', rutasProtegidas, (req, res)=>{ 
-    connection.query(`SELECT last_message FROM Chats C Where C.id = ?`, [req.body.chat], (err, resp)=>
+    connection.query(`SELECT notifications FROM Notifications N Where N.emisor = ? AND N.receptor = ?`, [req.body.emisor, req.body.receptor], (err, resp)=>
     {
         if(err){
             console.log(err)
             res.status(500).end()
         }else{
-            res.status(200).end()
+            res.status(200).send(resp)
         }
     });
 });
