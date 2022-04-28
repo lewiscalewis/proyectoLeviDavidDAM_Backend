@@ -429,7 +429,7 @@ app.post('/decline-request', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/set-notifications', rutasProtegidas, (req, res)=>{ 
-    connection.query(`UDPATE Chats SET last_message = ?`, [req.body.notification], (err, resp)=>
+    connection.query(`UDPATE Chats SET last_message = ? WHERE id = ?`, [req.body.notification, req.body.chat], (err, resp)=>
     {
         if(err){
             console.log(err)
