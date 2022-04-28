@@ -428,6 +428,30 @@ app.post('/decline-request', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/set-notifications', rutasProtegidas, (req, res)=>{ 
+    connection.query(`UDPATE Chats SET last_message = ?`, [req.body.notification], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).end()
+        }
+    });
+});
+
+app.post('/get-notifications', rutasProtegidas, (req, res)=>{ 
+    connection.query(`SELECT last_message FROM Chats C Where C.id = ?`, [req.body.chat], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).end()
+        }
+    });
+});
+
 app.post('/get-friend-requests', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT *
     FROM Friend_Requests F
