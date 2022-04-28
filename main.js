@@ -551,6 +551,7 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
                 res.status(500).end();
             }else{
                 if(response.size > 0){
+                    image = response[0].profileimage;
                     fs.readFile("assets/images/"+image, 'binary', function (err, data) {
                         if(err) {
                             console.log('error', err);
@@ -566,7 +567,6 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
                                 'Content-Length': stat.size,
                                 'Content-Disposition': 'attachment; filename=your_file_name'
                             });*/
-                            image = response[0].profileimage;
                             res.status(200).send(data)
                         }
                  });
