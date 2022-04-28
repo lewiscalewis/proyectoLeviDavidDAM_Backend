@@ -121,7 +121,7 @@ app.post('/users/', (req, res)=>{
 
 
 app.post('/save-message', rutasProtegidas, (req, res)=>{
-    connection.query(`INSERT INTO Messages (body, date, receptor, emisor) VALUES (?, ?, ?, ?)`, [req.body.message, req.body.date, req.body.receptor, req.body.emisor], (error, response)=>{
+    connection.query(`INSERT INTO Messages (body, date, receptor, emisor) VALUES (?, DATE_FORMAT(?, "%h:%i:%s %d-%m-%Y"), ?, ?)`, [req.body.message, req.body.date, req.body.receptor, req.body.emisor], (error, response)=>{
         if(error){
             console.log(error);
         }else{
