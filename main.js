@@ -550,26 +550,29 @@ app.post('/getImage', rutasProtegidas, (req, res)=>{
                 console.log(err)
                 res.status(500).end();
             }else{
-                image = response[0].profileimage;
-                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
-                    if(err) {
-                        console.log('error', err);
-                    }else{
-                         var stat = fs.statSync("assets/images/"+image);
-                     
-                         /*res.setHeader('Content-Length', stat.size);
-                         res.setHeader('Content-Type', 'image/*');
-                         res.setHeader('Content-Disposition', 'attachment; filename=sample');
-
-                         res.writeHead(200, {
-                            'Content-Type': 'image/*',
-                            'Content-Length': stat.size,
-                            'Content-Disposition': 'attachment; filename=your_file_name'
-                        });*/
-
-                         res.status(200).send(data)
-                    }
-             });
+                if(response.size > 0){
+                    fs.readFile("assets/images/"+image, 'binary', function (err, data) {
+                        if(err) {
+                            console.log('error', err);
+                        }else{
+                             var stat = fs.statSync("assets/images/"+image);
+                         
+                             /*res.setHeader('Content-Length', stat.size);
+                             res.setHeader('Content-Type', 'image/*');
+                             res.setHeader('Content-Disposition', 'attachment; filename=sample');
+    
+                             res.writeHead(200, {
+                                'Content-Type': 'image/*',
+                                'Content-Length': stat.size,
+                                'Content-Disposition': 'attachment; filename=your_file_name'
+                            });*/
+                            image = response[0].profileimage;
+                            res.status(200).send(data)
+                        }
+                 });
+                }else{
+                    res.status(500).end();
+                }
             }
         });
 });
