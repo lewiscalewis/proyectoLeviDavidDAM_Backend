@@ -119,6 +119,34 @@ app.post('/users/', (req, res)=>{
     });
 });
 
+
+app.post('save-message', rutasProtegidas, (err, res)=>{
+    connection.query(`INSERT INTO Messages VALUES (?, ?, ?, ?)`, [req.body.message, req.body.date, req.body.receptor, req.body.emisor], (error, response)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.status(200).end();
+        }
+    });
+});
+
+app.post('get-messages', rutasProtegidas, (err, res)=>{
+    connection.query(`
+        SELECT * 
+        FROM Messages 
+        WHERE 
+            emisor = ? AND
+            receptor = ? OR
+            emisor = ? AND 
+            receptor = ?`, [req.body.username1, req.body.username2, req.body.username2, req.body.username1], (error, response)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.status(200).send(response);
+        }
+    });
+});
+
 /*Devuelve un usuario con el USERNAME que recibe en el body.*/
 app.post('/user/', (req, res)=>{
     connection.query('SELECT * FROM Users WHERE username = ?',[req.body.username], (error, result)=>{
