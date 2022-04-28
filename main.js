@@ -120,7 +120,7 @@ app.post('/users/', (req, res)=>{
 });
 
 
-app.post('save-message', rutasProtegidas, (err, res)=>{
+app.post('/save-message', rutasProtegidas, (err, res)=>{
     connection.query(`INSERT INTO Messages VALUES (?, ?, ?, ?)`, [req.body.message, req.body.date, req.body.receptor, req.body.emisor], (error, response)=>{
         if(error){
             console.log(error);
@@ -130,7 +130,7 @@ app.post('save-message', rutasProtegidas, (err, res)=>{
     });
 });
 
-app.post('get-messages', rutasProtegidas, (err, res)=>{
+app.post('/get-messages', rutasProtegidas, (err, res)=>{
     connection.query(`
         SELECT * 
         FROM Messages 
