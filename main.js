@@ -124,7 +124,7 @@ app.post('/save-message', rutasProtegidas, (req, res)=>{
     connection.query(`INSERT INTO Messages (body, date, receptor, emisor) 
     VALUES (
         ?, 
-        str_to_date(?, "%H:%i:%s %d-%m-%y "), 
+        str_to_date(?, "%d-%m-%y %H:%i:%s"), 
         ?, 
         ?)`, [req.body.message, req.body.date, req.body.receptor, req.body.emisor], (error, response)=>{
         if(error){
