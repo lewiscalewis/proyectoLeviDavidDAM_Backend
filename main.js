@@ -53,6 +53,11 @@ io.on('connection', (socket) => {
         io.to(chat).emit("message", msg)
     });
 
+    socket.on("disconnect", ()=>{
+        console.log("Desconectando...");
+        socket.disconnect();
+    });
+
 });
 
 
