@@ -569,7 +569,7 @@ app.post('/getImage', (req, res)=>{
                             'Content-Length': stat.size,
                             'Content-Disposition': 'attachment; filename=your_file_name'
                         });*/
-
+			res.setHeader('Content-Type', 'image/png')
                          res.status(200).send(data)
                     }
              });
