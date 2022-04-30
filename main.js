@@ -584,8 +584,42 @@ const options = {
   }
 }
 
-app.get('/klk', (request, response) => {
+app.get('/klk', (req, res) => {
     response.setHeader('Content-Type', 'image/png')
+	
+	console.log("/getImage called");
+        var image;
+
+        connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
+            if(err){
+                console.log(err)
+                res.status(500).end();
+            }else{
+                image = response[0].profileimage;
+                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
+                    if(err) {
+                        console.log('error', err);
+                    }else{
+                         var stat = fs.statSync("assets/images/"+image);
+                     
+                         /*res.setHeader('Content-Length', stat.size);
+                         res.setHeader('Content-Type', 'image/*');
+                         res.setHeader('Content-Disposition', 'attachment; filename=sample');
+                         res.writeHead(200, {
+                            'Content-Type': 'image/*',
+                            'Content-Length': stat.size,
+                            'Content-Disposition': 'attachment; filename=your_file_name'
+                        });*/
+			
+                         //res.status(200).send(data)
+                    }
+             });
+            }
+        });
+	
+	
+	
+	
     makeRequest(response)
 })
 
