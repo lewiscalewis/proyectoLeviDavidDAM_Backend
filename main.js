@@ -569,15 +569,30 @@ app.post('/getImage', (req, res)=>{
                             'Content-Length': stat.size,
                             'Content-Disposition': 'attachment; filename=your_file_name'
                         });*/
-			res.setHeader('Content-Type', 'image/png')
-                         res.status(200).send(data)
+			
+                         //res.status(200).send(data)
                     }
              });
             }
         });
 });
+const options = {
+  method: 'GET',
+  uri: 'assets/images/1651080651282_Screenshot (7).png',
+  headers: {
+    'Accept': 'image/png'
+  }
+}
+
+app.get('/klk', (request, response) => {
+    response.setHeader('Content-Type', 'image/png')
+    makeRequest(response)
+})
 
 
+function makeRequest(resp){
+    request(options.uri, options).pipe(resp)
+}
 app.get('/', (req, res)=>{
     console.log(md5('test'));
     res.status(200).end();
