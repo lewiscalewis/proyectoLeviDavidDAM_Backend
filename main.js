@@ -13,7 +13,7 @@ var fs = require('fs');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
-
+const request = require('request-promise')
 //#############################################################################################
 
 let chat;
