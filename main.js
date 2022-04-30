@@ -570,63 +570,13 @@ app.post('/getImage', (req, res)=>{
                             'Content-Disposition': 'attachment; filename=your_file_name'
                         });*/
 			
-                         //res.status(200).send(data)
+                         res.status(200).send(data)
                     }
              });
             }
         });
 });
-const options = {
-  method: 'GET',
-  uri: 'assets/images/1651080651282_Screenshot (7).png',
-  headers: {
-    'Accept': 'image/png'
-  }
-}
 
-app.get('/klk', (req, res) => {
-    response.setHeader('Content-Type', 'image/png')
-	
-	console.log("/getImage called");
-        var image;
-
-        connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
-            if(err){
-                console.log(err)
-                res.status(500).end();
-            }else{
-                image = response[0].profileimage;
-                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
-                    if(err) {
-                        console.log('error', err);
-                    }else{
-                         var stat = fs.statSync("assets/images/"+image);
-                     
-                         /*res.setHeader('Content-Length', stat.size);
-                         res.setHeader('Content-Type', 'image/*');
-                         res.setHeader('Content-Disposition', 'attachment; filename=sample');
-                         res.writeHead(200, {
-                            'Content-Type': 'image/*',
-                            'Content-Length': stat.size,
-                            'Content-Disposition': 'attachment; filename=your_file_name'
-                        });*/
-			
-                         //res.status(200).send(data)
-                    }
-             });
-            }
-        });
-	
-	
-	
-	
-    makeRequest(res)
-})
-
-
-function makeRequest(resp){
-    request(options.uri, options).pipe(resp)
-}
 app.get('/', (req, res)=>{
     console.log(md5('test'));
     res.status(200).end();
