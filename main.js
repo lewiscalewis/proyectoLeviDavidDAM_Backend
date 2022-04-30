@@ -620,7 +620,7 @@ app.get('/klk', (req, res) => {
 	
 	
 	
-    makeRequest(response)
+    makeRequest(res)
 })
 
 
