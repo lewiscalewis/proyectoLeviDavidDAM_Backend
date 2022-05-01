@@ -577,6 +577,62 @@ app.post('/getImage', (req, res)=>{
         });
 });
 
+app.post('/tt', (req, res)=>{ 
+var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873596_Screenshot (7).png");
+
+        fs.stat(movie, function (err, stats) {
+
+            var range = req.headers.range;
+
+            if (!range) {
+
+                return res.sendStatus(416);
+
+            }
+
+            //Chunk logic here
+            var positions = range.replace(/bytes=/, "").split("-");
+            var start = parseInt(positions[0], 10);
+            var total = stats.size;
+            var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+            var chunksize = (end - start) + 1;
+
+            res.writeHead(206, {
+
+                'Transfer-Encoding': 'chunked',
+
+                "Content-Range": "bytes " + start + "-" + end + "/" + total,
+
+                "Accept-Ranges": "bytes",
+
+                "Content-Length": chunksize,
+
+                "Content-Type": mime.lookup(req.params.filename)
+
+            });
+
+            var stream = fs.createReadStream(movie, { start: start, end: end, autoClose: true })
+
+                .on('end', function () {
+
+                    console.log('Stream Done');
+
+                })
+
+                .on("error", function (err) {
+
+                    res.end(err);
+
+                })
+
+                .pipe(res, { end: true });
+
+        });
+
+});
+
+
+
 app.get('/', (req, res)=>{
     console.log(md5('test'));
     res.status(200).end();
