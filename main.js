@@ -632,6 +632,12 @@ var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873
 });
 
 
+var filepath = 'assets/images/1651356424934_Screenshot (2).png'
+app.get('/img', function (req, res) {
+    res.sendFile(filepath);
+})
+
+
 
 app.get('/', (req, res)=>{
     console.log(md5('test'));
