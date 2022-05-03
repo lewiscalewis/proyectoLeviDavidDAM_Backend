@@ -532,13 +532,14 @@ app.post('/friend-request', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 //-Parametros (token, username, image), FORM-DATA
-app.post('/image', upload.single('image'),  (req, res)=> {
+app.post('/upload-file', upload.single('file'),  (req, res)=> {
     console.log(req.file)
     connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
             res.status(500).end();
         }else{
+            console.log("Imagen subida")
             res.send('Completed task');
         }
     });
@@ -632,12 +633,16 @@ var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873
 });
 
 
-var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
-app.get('/img', function (req, res) {
+app.get('/download-image', function (req, res) {
+    //Sacar la imagen/file de sql segun el username
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
     res.sendFile(filepath);
 })
 
-
+app.get('/download-file', function (req, res) {
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
+    res.sendFile(filepath);
+})
 
 app.get('/', (req, res)=>{
     console.log(md5('test'));
