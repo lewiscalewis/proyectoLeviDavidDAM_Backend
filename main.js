@@ -30,6 +30,17 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
+var storageFile = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './assets/music')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${(new Date().getTime())}_${file.originalname}`);
+    }
+  });
+
+var uploadFile = multer({ storageFile: storageFile })
+
 //SOCKETS
 var io = require('socket.io')(http, {
     cors: {
@@ -532,14 +543,25 @@ app.post('/friend-request', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 //-Parametros (token, username, image), FORM-DATA
-app.post('/upload-file', upload.single('file'),  (req, res)=> {
-    console.log(req.file)
+app.post('/upload-image', upload.single('image'),  (req, res)=> {
     connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
             res.status(500).end();
         }else{
             console.log("Imagen subida")
+            res.send('Completed task');
+        }
+    });
+});
+
+app.post('/upload-file', uploadFile.single('file'),  (req, res)=> {
+    console.log(req.file)
+    connection.query('INSERT INTO Items VALUES (?, ?)',[req.file.filename, req.body.username], (err, response)=>{
+        if(err){
+            res.status(500).end();
+        }else{
+            console.log("Item subida")
             res.send('Completed task');
         }
     });
