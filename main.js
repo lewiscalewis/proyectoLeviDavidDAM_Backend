@@ -660,7 +660,7 @@ app.post('/download-image-test', function (req, res) {
     //Sacar la imagen/file de sql segun el username
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
     res.sendFile(filepath);
-}
+});
 
 		
 		
