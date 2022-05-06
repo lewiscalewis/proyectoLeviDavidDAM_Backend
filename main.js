@@ -655,14 +655,19 @@ var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873
 });
 
 
-app.post('/download-image', function (req, res) {
+app.post('/download-image-test', function (req, res) {
 	console.log(req.body.username)
     //Sacar la imagen/file de sql segun el username
-    //var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
-    //res.sendFile(filepath);
-	
-	
-	var image;
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
+    res.sendFile(filepath);
+}
+
+		
+		
+		
+app.post('/download-image', (req, res)=>{ 
+        console.log("/getImage called");
+        var image;
 
         connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
             if(err){
@@ -674,18 +679,22 @@ app.post('/download-image', function (req, res) {
                     if(err) {
                         console.log('error', err);
                     }else{
-			    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
+                         var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
 			    res.send(filepath);
-			    
-                         //var stat = fs.statSync("assets/images/"+image);
- 
+                    }
              });
             }
         });
-	
-	
-	    }
-
+});
+		
+		
+		
+		
+		
+		
+		
+		
+		
 app.get('/download-file', function (req, res) {
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
     res.sendFile(filepath);
