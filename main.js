@@ -684,8 +684,7 @@ app.post('/download-image', function (req, res) {
         });
 	
 	
-	
-})
+	    }
 
 app.get('/download-file', function (req, res) {
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
