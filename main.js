@@ -675,18 +675,11 @@ app.post('/download-image', (req, res)=>{
                 res.status(500).end();
             }else{
                 image = response[0].profileimage;
-                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
-                    if(err) {
-                        console.log('error', err);
-                    }else{
-                         var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
-			    res.send(filepath);
-                    }
-             });
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
+			    			res.send(filepath);
             }
         });
 });
-		
 		
 		
 		
