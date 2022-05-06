@@ -676,7 +676,7 @@ app.post('/download-image', (req, res)=>{
             }else{
                 image = response[0].profileimage;
                 var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
-			    			res.send(filepath);
+			    			res.sendFile(filepath);
             }
         });
 });
