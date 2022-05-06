@@ -655,7 +655,7 @@ var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873
 });
 
 
-app.get('/download-image', function (req, res) {
+app.post('/download-image', function (req, res) {
 	console.log(req.body.username)
     //Sacar la imagen/file de sql segun el username
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
