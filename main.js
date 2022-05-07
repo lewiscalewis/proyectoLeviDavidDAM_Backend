@@ -543,7 +543,7 @@ app.post('/friend-request', rutasProtegidas, (req, res)=>{
 //############################################################################################
 //Test upload file.
 //-Parametros (token, username, image), FORM-DATA
-app.post('/upload-image', upload.single('image'),  (req, res)=> {
+app.post('/upload-image', upload.single('image'), rutasProtegidas,  (req, res)=> {
     connection.query('UPDATE Users SET profileimage = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
@@ -555,7 +555,7 @@ app.post('/upload-image', upload.single('image'),  (req, res)=> {
     });
 });
 
-app.post('/upload-file', uploadFile.single('file'),  (req, res)=> {
+app.post('/upload-file', uploadFile.single('file'), rutasProtegidas, (req, res)=> {
     console.log(req.file)
     connection.query('INSERT INTO Items VALUES (?, ?)',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
@@ -665,7 +665,7 @@ app.post('/download-image-test', function (req, res) {
 		
 		
 		
-app.post('/download-image', (req, res)=>{ 
+app.post('/download-image', rutasProtegidas, (req, res)=>{ 
         console.log("/getImage called");
         var image;
 
