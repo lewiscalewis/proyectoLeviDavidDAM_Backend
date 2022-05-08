@@ -665,8 +665,8 @@ app.post('/download-image-test', function (req, res) {
 		
 		
 		
-app.post('/download-image', rutasProtegidas, (req, res)=>{ 
-        console.log("/getImage called");
+app.post('/download-image' (req, res)=>{ 
+        console.log("/download-image called");
         var image;
 
         connection.query('SELECT profileimage FROM Users WHERE username = ?',[req.body.username], (err, response)=>{
