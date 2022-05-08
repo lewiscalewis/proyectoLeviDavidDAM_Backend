@@ -665,7 +665,7 @@ app.post('/download-image-test', function (req, res) {
 		
 		
 		
-app.post('/download-image', (req, res)=>{ 
+app.post('/download-image', rutasProtegidas, (req, res)=>{ 
         console.log("/download-image called");
         var image;
 
