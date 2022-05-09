@@ -236,6 +236,18 @@ app.post('/signup/', (req, res)=>{
     })
 });
 
+app.post('/reset-password', (req, res)=>{
+    connection.query('UPDATE Users SET password = ? WHERE email = ?',[req.body.password, req.body.email], (error, result)=>{
+        if(error){
+            console.error(error)
+            res.status(500).end()
+        }else{
+            console.log('Contraseña actualizada')
+            res.status(200).end()
+        }
+    })
+})
+
 app.post('/login', (req, res) => {
     console.log(req.body.username+", "+req.body.password)
     connection.query('SELECT password, username FROM Users  WHERE username = ? AND password = ?',[req.body.username, req.body.password], (error, result)=>{
