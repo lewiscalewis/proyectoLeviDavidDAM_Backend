@@ -715,7 +715,7 @@ app.post('/download-item', rutasProtegidas, (req, res)=>{
 
 //Prueba para el reproductor WebView
 //Endpoint de David para descargar 1 cancion
-app.get('/download-item?itemid=/', (req, res)=>{ 
+app.get('/download-item/?itemid=/', (req, res)=>{ 
         console.log("/download-item called "+request.route.query.itemid);
         var image;
 
