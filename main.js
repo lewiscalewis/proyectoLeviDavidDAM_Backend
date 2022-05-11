@@ -712,6 +712,28 @@ app.post('/download-item', rutasProtegidas, (req, res)=>{
         });
 });
 
+
+//Prueba para el reproductor WebView
+//Endpoint de David para descargar 1 cancion
+app.get('/download-item', rutasProtegidas, (req, res)=>{ 
+        console.log("/download-item called");
+        var image;
+
+        connection.query('SELECT item FROM Items WHERE id = ?',[parseInt(req.body.itemid)], (err, response)=>{
+            if(err){
+                console.log(err)
+                res.status(500).end();
+            }else{
+                item = response[0].item;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+item;
+			    			res.sendFile(filepath);
+            }
+        });
+});
+
+		
+		
+		
 		
 		
 		
