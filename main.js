@@ -715,7 +715,10 @@ app.post('/download-item', rutasProtegidas, (req, res)=>{
 
 		
 		
-		
+app.get('/song-test', function (req, res) {
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/song.mp3'
+    res.sendFile(filepath);
+})	
 		
 		
 		
