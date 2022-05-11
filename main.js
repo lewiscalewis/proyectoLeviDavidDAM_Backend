@@ -715,11 +715,11 @@ app.post('/download-item', rutasProtegidas, (req, res)=>{
 
 //Prueba para el reproductor WebView
 //Endpoint de David para descargar 1 cancion
-app.get('/download-item/p?itemid=/', (req, res)=>{ 
-        console.log("/download-item called "+request.route.query.tagId);
+app.get('/download-item?itemid=/', (req, res)=>{ 
+        console.log("/download-item called "+request.route.query.itemid);
         var image;
 
-        connection.query('SELECT item FROM Items WHERE id = ?',[request.route.query.tagId], (err, response)=>{
+        connection.query('SELECT item FROM Items WHERE id = ?',[request.route.query.itemid], (err, response)=>{
             if(err){
                 console.log(err)
                 res.status(500).end();
