@@ -696,7 +696,7 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 		
 
 //Endpoint de David para descargar 1 cancion
-app.get('/download-item/:itemid', rutasProtegidas, (req, res)=>{ 
+app.get('/download-item/:itemid', (req, res)=>{ 
         console.log("/download-item called"+req.params.itemid);
         var image;
 
@@ -705,8 +705,8 @@ app.get('/download-item/:itemid', rutasProtegidas, (req, res)=>{
                 console.log(err)
                 res.status(500).end();
             }else{
-                item = response[0].item;
-                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+item;
+                itm = response[0].item;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+itm;
 			    			res.sendFile(filepath);
             }
         });
