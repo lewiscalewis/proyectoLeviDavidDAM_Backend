@@ -713,7 +713,7 @@ app.get('/download-item/:itemid', (req, res)=>{
 });
 
 // Get all music para el home page
-app.post('/all-items/', (req, res)=>{
+app.get('/all-items/', (req, res)=>{
     connection.query('SELECT * FROM Items', (error, result)=>{
 
         if(error){
@@ -728,7 +728,7 @@ app.post('/all-items/', (req, res)=>{
 
 //Get user music para el profile page.
 //Devuelve las canciones de un usuario
-app.post('/user-items/:userid', (req, res)=>{
+app.get('/user-items/:userid', (req, res)=>{
     connection.query('SELECT * FROM Items WHERE username = ?',[req.params.username], (error, result)=>{
 
         if(error){
