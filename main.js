@@ -722,7 +722,7 @@ app.get('/song-test', function (req, res) {
 		
 		
 app.get('/song/:itemid', function (req, res) {
-	console.log("song itemid: "+req.params.itemid; 
+	console.log("song itemid: "+req.params.itemid); 
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/song.mp3'
     res.sendFile(filepath);
 })	
