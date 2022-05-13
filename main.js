@@ -696,8 +696,8 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 		
 
 //Endpoint de David para descargar 1 cancion
-app.post('/download-item/:itemid', rutasProtegidas, (req, res)=>{ 
-        console.log("/download-item called");
+app.get('/download-item/:itemid', rutasProtegidas, (req, res)=>{ 
+        console.log("/download-item called"+req.params.itemid);
         var image;
 
         connection.query('SELECT item FROM Items WHERE id = ?',[parseInt(req.params.itemid)], (err, response)=>{
