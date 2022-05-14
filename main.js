@@ -363,10 +363,7 @@ app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
     connection.query(
         `
         SELECT 
-            U.username,
-            U.name,
-            U.surname,
-            U.profileImage
+            *
         FROM Users U
         INNER JOIN Chats C
             ON C.username1 = ? OR C.username2 = ?
