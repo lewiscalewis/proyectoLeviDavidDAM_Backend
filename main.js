@@ -362,20 +362,26 @@ app.post('/items', rutasProtegidas, (req, res)=>{
 app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
     connection.query(
         `
-        SELECT 
+        SELECT * FROM proyecto.Users;
+		SELECT 
             *
         FROM Users U
-        INNER JOIN Chats C
-            ON C.username1 = ? OR C.username2 = ?
         WHERE 
-            C.username1 != ? AND
-            C.username2 != ?
-        LIMIT 50`, [req.body.username, req.body.username, req.body.username, req.body.username], (err, resp)=>
+            U.username NOT IN (
+				SELECT * FROM Users U
+				JOIN (SELECT IF(C.username1 = ?, username2, username1) as username
+				FROM Chats C 
+				WHERE
+					username1 = ? OR
+					username2 = ?) as C
+				ON U.username = C.username
+            )`, [req.body.username, req.body.username, req.body.username, req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
             res.status(500).end()
         }else{
+            console.log(resp)
             res.status(200).send(resp)
         }
     });
