@@ -358,6 +358,32 @@ app.post('/items', rutasProtegidas, (req, res)=>{
     });
 });
 
+//petición para recoger todos los usuarios que no sean amigos (MÁX lista de 50 usuarios)
+app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
+    connection.query(
+        `
+        SELECT 
+            U.username,
+            U.name,
+            U.surname,
+            U.profileImage
+        FROM Users U
+        INNER JOIN Chats C
+            ON C.username1 = ? OR C.username2 = ?
+        WHERE 
+            C.username1 != ? AND
+            C.username2 != ?
+        LIMIT 50`, [req.body.username, req.body.username, req.body.username, req.body.username], (err, resp)=>
+    {
+        if(err){
+            console.log(err)
+            res.status(500).end()
+        }else{
+            res.status(200).send(resp)
+        }
+    });
+});
+
 app.post('/find-users', rutasProtegidas, (req, res)=>{ 
     connection.query(`SELECT *
         FROM Users U
