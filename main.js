@@ -604,7 +604,7 @@ app.post('/upload-file', uploadFile.single('file'), rutasProtegidas, (req, res)=
         }
     });
 });
-
+///////////////////////////////////////////////////////
 //-Parametros (token, username)  WWW-URL-ENCODED
 app.post('/getImage', (req, res)=>{ 
         console.log("/getImage called");
@@ -692,7 +692,7 @@ var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873
 
 });
 
-
+//test solo
 app.post('/download-image-test', function (req, res) {
 	console.log(req.body.username)
     //Sacar la imagen/file de sql segun el username
@@ -702,7 +702,8 @@ app.post('/download-image-test', function (req, res) {
 
 		
 		
-		
+	
+//Endpoint de David para descargar 1 imagen de perfil.
 app.post('/download-image', rutasProtegidas, (req, res)=>{ 
         console.log("/download-image called");
         var image;
@@ -719,17 +720,72 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
         });
 });
 		
+
+//Endpoint de David para descargar 1 cancion
+app.get('/download-item/:itemid', (req, res)=>{ 
+        console.log("/download-item called"+req.params.itemid);
+        var image;
+
+        connection.query('SELECT item FROM Items WHERE id = ?',[parseInt(req.params.itemid)], (err, response)=>{
+            if(err){
+                console.log(err)
+                res.status(500).end();
+            }else{
+                itm = response[0].item;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+itm;
+			    			res.sendFile(filepath);
+            }
+        });
+});
+
+// Get all music para el home page
+app.post('/all-items/',rutasProtegidas, (req, res)=>{
+    connection.query('SELECT * FROM Items', (error, result)=>{
+
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+            res.status(200).send(result);
+        }
+    });
+});
+		
+
+//Get user music para el profile page.
+//Devuelve las canciones de un usuario
+app.post('/user-items/',rutasProtegidas, (req, res)=>{
+    connection.query('SELECT * FROM Items WHERE username = ?',[req.body.username], (error, result)=>{
+
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+            res.status(200).send(result);
+        }
+    });
+});
+
+
+/*		
+app.get('/song-test', function (req, res) {
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/song.mp3'
+    res.sendFile(filepath);
+})	
 		
 		
-		
-		
-		
+app.get('/song/:itemid', function (req, res) {
+	console.log("song itemid: "+req.params.itemid); 
+    var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/song.mp3'
+    res.sendFile(filepath);
+})	
+			
 		
 		
 app.get('/download-file', function (req, res) {
     var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/1651356424934_Screenshot (2).png'
     res.sendFile(filepath);
-})
+})*/
 
 app.get('/', (req, res)=>{
     console.log(md5('test'));
