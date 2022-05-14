@@ -362,7 +362,6 @@ app.post('/items', rutasProtegidas, (req, res)=>{
 app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
     connection.query(
         `
-        SELECT * FROM proyecto.Users;
 		SELECT 
             *
         FROM Users U
