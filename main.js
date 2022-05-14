@@ -367,7 +367,7 @@ app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
         FROM Users U
         WHERE 
             U.username NOT IN (
-				SELECT * FROM Users U
+				SELECT U.username FROM Users U
 				JOIN (SELECT IF(C.username1 = ?, username2, username1) as username
 				FROM Chats C 
 				WHERE
