@@ -705,6 +705,26 @@ app.post('/download-image-test', function (req, res) {
 		
 		
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Parametros:
+	//token
+	//username		nombre de usuario
 //Endpoint de David para descargar 1 imagen de perfil.
 app.post('/download-image', rutasProtegidas, (req, res)=>{ 
         console.log("/download-image called");
@@ -722,6 +742,34 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
         });
 });
 		
+
+
+
+//Parametros:
+	//token
+	
+	//name		nombre de la canción
+	//author	username del autor
+	//genero
+	//descripcion	
+	//copyright	boolean
+
+	//uploadDate	string
+	//item		mp3
+	//cover		png
+app.post('/upload-item', upload.single('item'), rutasProtegidas,  (req, res)=> {
+    connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
+        if(err){
+            console.log(req.file.filename)
+            res.status(500).end();
+        }else{
+            console.log("Imagen subida")
+            res.send('Completed task');
+        }
+    });
+});
+
+
 
 //Endpoint de David para descargar 1 cancion
 app.get('/download-item/:itemid', (req, res)=>{ 
@@ -767,6 +815,8 @@ app.post('/user-items/',rutasProtegidas, (req, res)=>{
         }
     });
 });
+
+
 
 
 /*		
