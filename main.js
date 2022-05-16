@@ -169,7 +169,7 @@ app.post('/get-messages', rutasProtegidas, (req, res)=>{
 });
 
 /*Devuelve un usuario con el USERNAME que recibe en el body.*/
-app.post('/user/', (req, res)=>{
+app.post('/user/', rutasProtegidas, (req, res)=>{
     connection.query('SELECT * FROM Users WHERE username = ?',[req.body.username], (error, result)=>{
 
         if(error){
