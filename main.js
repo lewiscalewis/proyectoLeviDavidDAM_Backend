@@ -239,7 +239,8 @@ app.post('/chatID/', rutasProtegidas, (req, res)=>{
 
 app.post('/signup/', (req, res)=>{
     console.log(`${req.body.name}, ${req.body.surname}, ${req.body.email}, ${req.body.password}`)
-    connection.query('INSERT INTO Users (name, surname, email, password, username) VALUES (?, ?, ?, ?, ?)',[req.body.name, req.body.surname, req.body.email, req.body.password, req.body.username], (error, result)=>{
+    img = 'default.png'
+    connection.query('INSERT INTO Users (name, surname, email, password, username, profileImage) VALUES (?, ?, ?, ?, ?, ?)',[req.body.name, req.body.surname, req.body.email, req.body.password, req.body.username, img], (error, result)=>{
         if(error){
             console.error(error)
             res.status(500).end()
@@ -746,23 +747,6 @@ app.post('/download-image-test', function (req, res) {
 		
 		
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Parametros:
 	//token
 	//username		nombre de usuario
