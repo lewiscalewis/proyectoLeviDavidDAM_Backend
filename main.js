@@ -269,7 +269,7 @@ app.post('/update-state', rutasProtegidas, (req, res)=>{
             res.status(500).end()
         }else{
             console.log(`${req.body.password}, ${req.body.username}`)
-            console.log('Estado actualizado')
+            console.log('Estado actualizado '+result)
             res.status(200).end()
         }
     })
