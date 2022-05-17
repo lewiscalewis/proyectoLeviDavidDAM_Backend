@@ -263,7 +263,7 @@ app.post('/reset-password-settings', rutasProtegidas, (req, res)=>{
 })
 
 app.post('/update-state', rutasProtegidas, (req, res)=>{
-    connection.query('UPDATE Users SET state = ? WHERE username = ?',[req.body.password, req.body.username], (error, result)=>{
+    connection.query('UPDATE Users SET state = ? WHERE username = ?',[req.body.state, req.body.username], (error, result)=>{
         if(error){
             console.error(error)
             res.status(500).end()
