@@ -784,7 +784,7 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 
 	//item		mp3
 	//cover		png
-app.post('/upload-item', upload.single('item'), upload.single('cover'), rutasProtegidas,  (req, res)=> {
+app.post('/upload-item', upload.single('item'), rutasProtegidas,  (req, res)=> {
 	var token = req.body.token;
 	var name = req.body.name;
 	var author = req.body.author;
@@ -794,7 +794,7 @@ app.post('/upload-item', upload.single('item'), upload.single('cover'), rutasPro
 	var uploadDate = req.body.uploadDate;
 	
 	var item = req.item.filename;
-	var cover = req.cover.filename;
+	//var cover = req.cover.filename;
     /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
