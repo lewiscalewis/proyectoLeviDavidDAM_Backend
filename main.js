@@ -777,15 +777,25 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 	
 	//name		nombre de la canción
 	//author	username del autor
-	//genero
-	//descripcion	
-	//copyright	boolean
+	//genere	genero del choicebox
+	//description	descripcion del textarea
+	//copyright	boolean del choicebox
+	//uploadDate	string fecha actual
 
-	//uploadDate	string
 	//item		mp3
 	//cover		png
-app.post('/upload-item', upload.single('item'), rutasProtegidas,  (req, res)=> {
-    connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
+app.post('/upload-item', upload.single('item'), upload.single('cover'), rutasProtegidas,  (req, res)=> {
+	var token = req.body.token;
+	var name = req.body.name;
+	var author = req.body.author;
+	var genere = req.body.genere;
+	var description = req.body.description;
+	var copyright = req.body.copyright;
+	var uploadDate = req.body.uploadDate;
+	
+	var item = req.item.filename;
+	var cover = req.cover.filename;
+    /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
             console.log(req.file.filename)
             res.status(500).end();
@@ -793,8 +803,9 @@ app.post('/upload-item', upload.single('item'), rutasProtegidas,  (req, res)=> {
             console.log("Imagen subida")
             res.send('Completed task');
         }
-    });
+    });*/
 });
+
 
 
 
