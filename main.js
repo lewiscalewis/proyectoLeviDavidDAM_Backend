@@ -39,7 +39,21 @@ var storageFile = multer.diskStorage({
     }
   });
 
+
+
 var uploadFile = multer({ storageFile: storageFile })
+
+var storageCover = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './assets/covers')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${(new Date().getTime())}_${file.originalname}`);
+    }
+  });
+
+var uploadCover = multer({ storageCover: storageCover })
+
 
 //SOCKETS
 var io = require('socket.io')(http, {
@@ -784,7 +798,7 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 
 	//item		mp3
 	//cover		png
-app.post('/upload-item', upload.single('item'), rutasProtegidas,  (req, res)=> {
+app.post('/upload-item', uploadFile.single('item'), rutasProtegidas,  (req, res)=> {
 	var token = req.body.token;
 	var name = req.body.name;
 	var author = req.body.author;
