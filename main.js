@@ -807,7 +807,7 @@ app.post('/upload-item', uploadFile.single('item'), rutasProtegidas,  (req, res)
 	var copyright = req.body.copyright;
 	var uploadDate = req.body.uploadDate;
 	
-	var item = req.item.filename;
+	var item = req.file.filename;
 	//var cover = req.cover.filename;
     /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
