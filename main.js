@@ -257,7 +257,8 @@ app.post('/reset-password-settings', rutasProtegidas, (req, res)=>{
             res.status(500).end()
         }else{
             console.log('Contraseña actualizada')
-            res.status(200).end()
+            console.log
+            res.status(200).end(`${req.body.password}, ${req.body.username}`)
         }
     })
 })
