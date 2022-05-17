@@ -123,7 +123,7 @@ var connection = mysql.createConnection({
 });
 
 /*Sample query*/
-app.post('/users/', (req, res)=>{
+app.post('/users', (req, res)=>{
     connection.query('SELECT * FROM Users', (error, result)=>{
 
         if(error){
@@ -236,6 +236,7 @@ app.post('/signup/', (req, res)=>{
     })
 });
 
+//vía correo electrónico por pérdida de datos
 app.post('/reset-password', (req, res)=>{
     connection.query('UPDATE Users SET password = ? WHERE email = ?',[req.body.password, req.body.email], (error, result)=>{
         if(error){
@@ -243,6 +244,31 @@ app.post('/reset-password', (req, res)=>{
             res.status(500).end()
         }else{
             console.log('Contraseña actualizada')
+            res.status(200).end()
+        }
+    })
+})
+
+//vía ajustes de usuario ya logeado
+app.post('/reset-password-settings', rutasProtegidas, (req, res)=>{
+    connection.query('UPDATE Users SET password = ? WHERE username = ?',[req.body.password, req.body.username], (error, result)=>{
+        if(error){
+            console.error(error)
+            res.status(500).end()
+        }else{
+            console.log('Contraseña actualizada')
+            res.status(200).end()
+        }
+    })
+})
+
+app.post('/update-state', rutasProtegidas, (req, res)=>{
+    connection.query('UPDATE Users SET state = ? WHERE username = ?',[req.body.password, req.body.username], (error, result)=>{
+        if(error){
+            console.error(error)
+            res.status(500).end()
+        }else{
+            console.log('Estado actualizado')
             res.status(200).end()
         }
     })
