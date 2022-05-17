@@ -798,7 +798,7 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
 
 	//item		mp3
 	//cover		png
-app.post('/upload-item', uploadFile.single('item'), rutasProtegidas,  (req, res)=> {
+app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)=> {
 	var token = req.body.token;
 	var name = req.body.name;
 	var author = req.body.author;
