@@ -825,7 +825,7 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
             res.status(500).end();
         }else{
             console.log("Item subida")
-            res.status(200).send(response[0].id)
+            res.status(200).send(response[0])
         }
     });
 	
