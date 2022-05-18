@@ -819,13 +819,13 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
 	console.log("uploadDate= "+uploadDate);
 	console.log("item= "+req.file.filename);
 	
-    connection.query('INSERT INTO Items(name, username, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?)', [req.body.name, req.body.author, req.body.genere, req.body.description, "1", req.body.uploadDate, req.file.filename], (err, response)=>{
+    connection.query('INSERT INTO Items(name, username, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?) returning id', [req.body.name, req.body.author, req.body.genere, req.body.description, "1", req.body.uploadDate, req.file.filename], (err, response)=>{
         if(err){
 		console.log(err)
             res.status(500).end();
         }else{
             console.log("Item subida")
-            res.status(200).send(response[0])
+            res.status(200).send(response[0].id)
         }
     });
 	
