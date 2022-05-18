@@ -809,6 +809,25 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
 	var uploadDate = req.body.uploadDate;
 	
 	var item = req.file.filename;
+	
+	//console.log("token= "+name);
+	console.log("name= "+name);
+	console.log("author= "+author);
+	console.log("genere= "+genere);
+	console.log("description= "+description);
+	console.log("copyright= "+copyright);
+	console.log("uploadDate= "+uploadDate);
+	console.log("item= "+req.file.filename);
+	
+    connection.query('INSERT INTO Items (name, author, genere, description, copyright, uploadDate, item)VALUES (?, ?, ?, ?, ?, ?, ?)',[req.body.name, req.body.author, req.body.genere, req.body.description,req.body.copyright, req.body.uploadDate, req.file.filename], (err, response)=>{
+        if(err){
+            res.status(500).end();
+        }else{
+            console.log("Item subida")
+            res.send('Completed task');
+        }
+    });
+	
 	//var cover = req.cover.filename;
     /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
@@ -819,6 +838,7 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
             res.send('Completed task');
         }
     });*/
+	
 });
 
 
