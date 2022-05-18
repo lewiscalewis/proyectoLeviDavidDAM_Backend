@@ -819,14 +819,19 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
 	console.log("uploadDate= "+uploadDate);
 	console.log("item= "+req.file.filename);
 	
-    connection.query('INSERT INTO Items(name, author, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?)', [req.body.name, req.body.author, req.body.genere, req.body.description, 1, req.body.uploadDate, req.file.filename], (err, response)=>{
+    connection.query('INSERT INTO Items(name, author, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?) returning id', [req.body.name, req.body.author, req.body.genere, req.body.description, 1, req.body.uploadDate, req.file.filename], (err, response)=>{
         if(err){
             res.status(500).end();
         }else{
             console.log("Item subida")
-            res.send('Completed task');
+            res.send(response);
         }
     });
+	
+	//Inserta el item, sin cover, y devuelve el id generado automaticamente en la petición
+	//Para que el cliente pueda subir el cover con ese id.
+	
+	
 	
 	//var cover = req.cover.filename;
     /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
