@@ -19,6 +19,8 @@ const request = require('request-promise')
 let chat;
 
 
+
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './assets/images')
@@ -29,6 +31,11 @@ var storage = multer.diskStorage({
   });
 
 var upload = multer({ storage: storage })
+
+
+
+
+
 
 var storageFile = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -41,7 +48,13 @@ var storageFile = multer.diskStorage({
 
 
 
-var uploadFile = multer({ storageFile: storageFile })
+var uploadFile = multer({ storage: storageFile })
+
+
+
+
+
+
 
 var storageCover = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -52,7 +65,11 @@ var storageCover = multer.diskStorage({
     }
   });
 
-var uploadCover = multer({ storageCover: storageCover })
+var uploadCover = multer({ storage: storageCover })
+
+
+
+
 
 
 //SOCKETS
