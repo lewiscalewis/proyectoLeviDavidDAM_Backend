@@ -821,6 +821,7 @@ app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)
 	
     connection.query('INSERT INTO Items(name, username, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?)', [req.body.name, req.body.author, req.body.genere, req.body.description, 1, req.body.uploadDate, req.file.filename], (err, response)=>{
         if(err){
+		console.log(err)
             res.status(500).end();
         }else{
             console.log("Item subida")
