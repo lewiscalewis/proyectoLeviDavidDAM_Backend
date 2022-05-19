@@ -433,7 +433,8 @@ app.post('/get-noFriends', rutasProtegidas, (req, res)=>{
 					username1 = ? OR
 					username2 = ?) as C
 				ON U.username = C.username
-            )`, [req.body.username, req.body.username, req.body.username, req.body.username], (err, resp)=>
+            ) AND
+            U.username != ?`, [req.body.username, req.body.username, req.body.username, req.body.username, req.body.username], (err, resp)=>
     {
         if(err){
             console.log(err)
