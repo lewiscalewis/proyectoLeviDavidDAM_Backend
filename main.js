@@ -609,15 +609,19 @@ app.post('/find-contact', rutasProtegidas, (req, res)=>{
 
 app.post('/friend-request', rutasProtegidas, (req, res)=>{ 
     
-    connection.query(`SELECT receptor 
+    connection.query(`
+        SELECT receptor 
         FROM Friend_Requests
-        WHERE emisor = ?`, [req.body.emisor], (e, r)=>{
+        WHERE 
+            emisor = ? AND 
+            receptor = ?
+                `, [req.body.emisor, req.body.receptor], (e, r)=>{
             if(e){
                 console.error(e)
                 res.status(500).end()
             }else{
                 if(r.length > 0){
-                    res.status(200).send("request_error")
+                    res.status(500).end()
                 }else{
                     connection.query(`INSERT INTO
                     Friend_Requests
