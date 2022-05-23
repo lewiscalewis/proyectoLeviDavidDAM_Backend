@@ -186,7 +186,7 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
     connection.query(
         `
-       UPDATE Users SET username1 = ?, user WHERE username = ?
+       UPDATE Users SET online = ? WHERE username = ?
         `, [online, req.body.username], (error, response)=>{
         if(error){
             console.log(error);
