@@ -236,7 +236,9 @@ app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
         if(error){
             console.log(error);
         }else{
+            console.log(response)
             if(response.length == 0){
+                console.log("Username2")
                 connection.query(
                     `
                    UPDATE Chats_online SET username2 = ? WHERE id = ?
@@ -274,6 +276,7 @@ app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
                             }
                         });
                     }else{
+                        console.log("Username2")
                         res.status(200).end();
                     }
                 });
