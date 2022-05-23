@@ -182,6 +182,19 @@ app.post('/save-message', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/set-online', rutasProtegidas, (req, res)=>{
+    connection.query(
+        `
+       INSERT INTO Users (online) VALUES (?) WHERE username = ?
+        `, [req.body.online, req.body.username], (error, response)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.status(200).send(response);
+        }
+    });
+});
+
 app.post('/get-messages', rutasProtegidas, (req, res)=>{
     connection.query(`
         SELECT * 
