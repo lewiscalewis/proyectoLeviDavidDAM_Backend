@@ -186,7 +186,7 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
     connection.query(
         `
-       UPDATE Users SET online = ? WHERE username = ?
+       UPDATE Users SET username1 = ?, user WHERE username = ?
         `, [online, req.body.username], (error, response)=>{
         if(error){
             console.log(error);
@@ -194,6 +194,51 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
             res.status(200).send(response);
         }
     });
+});
+
+app.post('/reset-chat', rutasProtegidas, (req, res)=>{
+    connection.query(
+        `
+       SELECT username1
+       FROM Chats
+       WHERE 
+            username1 = ? AND
+            id_chat = ?
+        `, [req.body.username, req.body.chat], (error, response)=>{
+            if(response.length > 0){
+                connection.query(
+                    `
+                    UPDATE 
+                        Chats_online CO
+                    SET 
+                        CO.username1 = ?
+                    WHERE
+                        CO.username1 = ?
+                    `, [online, req.body.username], (error, response)=>{
+                    if(error){
+                        console.log(error);
+                    }else{
+                        res.status(200).send(response);
+                    }
+                });
+            }else {
+                connection.query(
+                    `
+                    UPDATE 
+                        Chats_online CO
+                    SET 
+                        CO.username2 = ?
+                    WHERE
+                        CO.username2 = ?
+                    `, [online, req.body.username], (error, response)=>{
+                    if(error){
+                        console.log(error);
+                    }else{
+                        res.status(200).send(response);
+                    }
+                });
+            }
+        });
 });
 
 app.post('/is-receptor-in-chat', (req, res)=>{
