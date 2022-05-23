@@ -597,6 +597,7 @@ app.post('/get-notifications', rutasProtegidas, (req, res)=>{
             console.log(err)
             res.status(500).end()
         }else{
+            console.log(resp)
             res.status(200).send(resp)
         }
     });
