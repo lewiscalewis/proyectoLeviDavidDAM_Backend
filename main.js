@@ -214,12 +214,12 @@ app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
                 connection.query(
                     `
                    UPDATE Chats_online SET username2 = ? WHERE id = ?
-                    `, [req.body.username, req.body.chat], (error, r1)=>{
+                    `, [online, req.body.chat], (error, r1)=>{
                     if(error){
                         connection.query(
                             `
                            INSERT INTO Chats_online (id, username1) VALUES (?, ?)
-                            `, [req.body.chat, req.body.username], (error, response)=>{
+                            `, [req.body.chat, online], (error, response)=>{
                             if(error){
                                 console.log(error);
                             }else{
@@ -235,12 +235,12 @@ app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
                 connection.query(
                     `
                    UPDATE Chats_online SET username1 = ? WHERE id = ?
-                    `, [req.body.username, req.body.chat], (error, r2)=>{
+                    `, [online, req.body.chat], (error, r2)=>{
                     if(error){
                         connection.query(
                             `
                            INSERT INTO Chats_online (id, username1) VALUES (?, ?)
-                            `, [req.body.chat, req.body.username], (error, response)=>{
+                            `, [req.body.chat, online], (error, response)=>{
                             if(error){
                                 console.log(error);
                             }else{
