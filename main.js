@@ -185,7 +185,7 @@ app.post('/save-message', rutasProtegidas, (req, res)=>{
 app.post('/set-online', rutasProtegidas, (req, res)=>{
     connection.query(
         `
-       UPATE Users SET online = ? WHERE username = ?
+       UPDATE Users SET online = ? WHERE username = ?
         `, [req.body.online, req.body.username], (error, response)=>{
         if(error){
             console.log(error);
