@@ -241,7 +241,7 @@ app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
                 console.log("Username2")
                 connection.query(
                     `
-                    INSERT INTO Chats_online (id, username1) VALUES (?, ?)
+                    INSERT INTO Chats_online (id, username2) VALUES (?, ?)
                     `, [req.body.chat, online], (error, r1)=>{
                     if(error){
                         connection.query(
