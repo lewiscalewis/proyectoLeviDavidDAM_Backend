@@ -201,7 +201,7 @@ app.post('/is-receptor-in-chat', (req, res)=>{
     SELECT IF(C.username1 = ?, CO.username1, CO.username2) as username
     FROM Chats_online CO
     JOIN Chats C
-        ON C.id_chat = C.id
+        ON C.id_chat = CO.id
     WHERE CO.id = ? AND 
         C.username1 = ? OR 
         C.username2 = ?`, [req.body.receptor, req.body.chat, req.body.receptor, req.body.receptor], (error, result)=>{
