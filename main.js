@@ -209,8 +209,12 @@ app.post('/is-receptor-in-chat', (req, res)=>{
             console.error(error);
             res.status(500).end();
         }else{
-            if(result[0].username){
-                res.status(200).send(true);
+            if(result[0].length > 0){
+                if(result.username){
+                    res.status(200).send(true);
+                }else{
+                    res.status(200).send(false);
+                }
             }else{
                 res.status(200).send(false);
             }
