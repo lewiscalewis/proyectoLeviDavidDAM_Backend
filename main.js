@@ -198,7 +198,7 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
 
 app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
-
+    //los req.username deberian ser online pero me da pereza cambiarlo a la verga
     connection.query(
         `
        SELECT username1
