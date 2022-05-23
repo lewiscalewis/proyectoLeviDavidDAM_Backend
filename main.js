@@ -196,6 +196,28 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
     });
 });
 
+app.post('/is-receptor-in-chat', (req, res)=>{
+    connection.query(`
+    SELECT IF(C.username1 = ?, CO.username1, CO.username2) as username
+    FROM Chats_online CO
+    JOIN Chats C
+        ON C.id_chat = C.id
+    WHERE CO.id = ? AND 
+        C.username1 = ? OR 
+        C.username2 = ?`, [req.body.receptor, req.body.chat, req.body.receptor, req.body.receptor], (error, result)=>{
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+            if(result[0].username){
+                res.status(200).send(true);
+            }else{
+                res.status(200).send(false);
+            }
+        }
+    });
+});
+
 app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
     //los req.username deberian ser online pero me da pereza cambiarlo a la verga
