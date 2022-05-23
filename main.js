@@ -198,14 +198,61 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
 
 app.post('/is-in-chat', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
+
     connection.query(
         `
-       UPDATE Users SET in_chat = ? WHERE username = ?
-        `, [online, req.body.username], (error, response)=>{
+       SELECT username1
+       FROM Chats
+       WHERE 
+            username1 = ? AND
+            id_chat = ?
+        `, [req.body.username, req.body.chat], (error, response)=>{
         if(error){
             console.log(error);
         }else{
-            res.status(200).send(response);
+            if(response.length == 0){
+                connection.query(
+                    `
+                   UPDATE Chats_online SET username2 = ? WHERE id = ?
+                    `, [req.body.username, req.body.chat], (error, r1)=>{
+                    if(error){
+                        connection.query(
+                            `
+                           INSERT INTO Chats_online (id, username1) VALUES (?, ?)
+                            `, [req.body.chat, req.body.username], (error, response)=>{
+                            if(error){
+                                console.log(error);
+                            }else{
+                                res.status(200).end();
+                            }
+                        });
+                        console.log(error);
+                    }else{
+                        res.status(200).end();
+                    }
+                });
+            }else{
+                connection.query(
+                    `
+                   UPDATE Chats_online SET username1 = ? WHERE id = ?
+                    `, [req.body.username, req.body.chat], (error, r2)=>{
+                    if(error){
+                        connection.query(
+                            `
+                           INSERT INTO Chats_online (id, username1) VALUES (?, ?)
+                            `, [req.body.chat, req.body.username], (error, response)=>{
+                            if(error){
+                                console.log(error);
+                            }else{
+                                res.status(200).end();
+                            }
+                        });
+                    }else{
+                        res.status(200).end();
+                    }
+                });
+            }
+
         }
     });
 });
