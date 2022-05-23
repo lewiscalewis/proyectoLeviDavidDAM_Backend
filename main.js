@@ -183,10 +183,11 @@ app.post('/save-message', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/set-online', rutasProtegidas, (req, res)=>{
+    var online = req.body.online == 'true' ? true : false
     connection.query(
         `
        UPDATE Users SET online = ? WHERE username = ?
-        `, [req.body.online, req.body.username], (error, response)=>{
+        `, [online, req.body.username], (error, response)=>{
         if(error){
             console.log(error);
         }else{
