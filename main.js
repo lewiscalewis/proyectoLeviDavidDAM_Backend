@@ -830,7 +830,7 @@ app.get('/download-item/:itemid', (req, res)=>{
                 res.status(500).end();
             }else{
                 itm = response[0].item;
-                var filepath = 'assets/music/'+itm;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+itm;
 			    			res.sendFile(filepath);
             }
         });
