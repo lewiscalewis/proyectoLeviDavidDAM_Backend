@@ -36,13 +36,16 @@ var upload = multer({ storage: storage })
 
 
 
-
+var i = 0
 var storageFile = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './assets/music')
     },
     filename: function (req, file, cb) {
-      datetime_item = new Date().getTime();
+    if(i < 1){
+        datetime_item = new Date().getTime()
+    }
+    i++
       cb(null, `${datetime_item}_${file.originalname}`);
     }
   });
