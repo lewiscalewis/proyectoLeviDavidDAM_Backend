@@ -674,7 +674,20 @@ app.post('/upload-image', upload.single('image'), rutasProtegidas,  (req, res)=>
     });
 });
 
-app.post('/upload-file', uploadFile.single('file'), rutasProtegidas, (req, res)=> {
+app.post('/upload-item', upload.single('image'), uploadFile.single('item'), rutasProtegidas,  (req, res)=> {
+    connection.query('INSERT INTO Items (name, username, item, genre, image, description, copyright) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [req.file.name, req.body.username, req.file.item, req.file.genre, req.file.image, req.file.description, req.file.copyright], (err, response)=>{
+        if(err){
+            console.log(req.file.filename)
+            res.status(500).end();
+        }else{
+            console.log("Imagen subida")
+            res.send('Completed task');
+        }
+    });
+});
+
+app.post('/upload-file', uploadCover.single('file'), rutasProtegidas, (req, res)=> {
     console.log(req.file)
     connection.query('INSERT INTO Items VALUES (?, ?)',[req.file.filename, req.body.username], (err, response)=>{
         if(err){
@@ -803,72 +816,6 @@ app.post('/download-image', rutasProtegidas, (req, res)=>{
             }
         });
 });
-		
-
-
-
-//Parametros:
-	//token
-	
-	//name		nombre de la canción
-	//author	username del autor
-	//genere	genero del choicebox
-	//description	descripcion del textarea
-	//copyright	boolean del choicebox
-	//uploadDate	string fecha actual
-
-	//item		mp3
-	//cover		png
-app.post('/upload-item', uploadFile.single('file'), rutasProtegidas,  (req, res)=> {
-	var token = req.body.token;
-	var name = req.body.name;
-	var author = req.body.author;
-	var genere = req.body.genere;
-	var description = req.body.description;
-	var copyright = req.body.copyright;
-	var uploadDate = req.body.uploadDate;
-	
-	var item = req.file.filename;
-	
-	//console.log("token= "+name);
-	console.log("name= "+name);
-	console.log("author= "+author);
-	console.log("genere= "+genere);
-	console.log("description= "+description);
-	console.log("copyright= "+copyright);
-	console.log("uploadDate= "+uploadDate);
-	console.log("item= "+req.file.filename);
-	
-    connection.query('INSERT INTO Items(name, username, genere, description, copyright, uploadDate, item) VALUES (?, ?, ?, ?, ?, ?, ?)', [req.body.name, req.body.author, req.body.genere, req.body.description, "1", req.body.uploadDate, req.file.filename], (err, response)=>{
-        if(err){
-		console.log(err)
-            res.status(500).end();
-        }else{
-            console.log("Item subida")
-            res.status(200).send(response.insertId.toString())
-        }
-    });
-	
-	//Inserta el item, sin cover, y devuelve el id generado automaticamente en la petición
-	//Para que el cliente pueda subir el cover con ese id.
-	
-	
-	
-	//var cover = req.cover.filename;
-    /*connection.query('UPDATE Items SET cover = ? WHERE username = ?',[req.file.filename, req.body.username], (err, response)=>{
-        if(err){
-            console.log(req.file.filename)
-            res.status(500).end();
-        }else{
-            console.log("Imagen subida")
-            res.send('Completed task');
-        }
-    });*/
-	
-});
-
-
-
 
 //Endpoint de David para descargar 1 cancion
 app.get('/download-item/:itemid', (req, res)=>{ 
