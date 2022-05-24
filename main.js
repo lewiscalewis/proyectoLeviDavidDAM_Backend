@@ -676,7 +676,7 @@ app.post('/upload-image', upload.single('image'), rutasProtegidas,  (req, res)=>
 
 app.post('/upload-item', uploadFile.array('multiple-files'), rutasProtegidas,  (req, res)=> {
     console.log(req.files)
-    date = new Date().getUTCDate()
+    date = `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`
     connection.query('INSERT INTO Items (name, username, item, genre, image, description, copyright, uploadDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
     [req.body.name, req.body.username, req.files[0].originalname, req.body.genre, req.files[1].originalname, req.body.description, req.body.copyright, date], (err, response)=>{
         if(err){
@@ -729,7 +729,7 @@ app.post('/getImage', (req, res)=>{
 			
                          res.status(200).send(data)
                     }
-             });
+                });
             }
         });
 });
@@ -837,14 +837,25 @@ app.get('/download-item/:itemid', (req, res)=>{
 });
 
 // Get all music para el home page
-app.post('/all-items/',rutasProtegidas, (req, res)=>{
+app.post('/all-items/', rutasProtegidas, (req, res)=>{
     connection.query('SELECT * FROM Items', (error, result)=>{
-
         if(error){
             console.error(error);
             res.status(500).end();
         }else{
-            res.status(200).send(result);
+            if(result.length > 0){
+                music = response[0].item;
+                fs.readFile("assets/music/"+music, 'binary', function (err, data) {
+                    if(err) {
+                        console.log('error', err);
+                    }else{
+                        var stat = fs.statSync("assets/music/"+music);
+                        res.status(200).send(data)
+                    }
+                });
+            }else{
+                res.status(200).send(result);
+            }
         }
     });
 });
