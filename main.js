@@ -677,7 +677,7 @@ app.post('/upload-image', upload.single('image'), rutasProtegidas,  (req, res)=>
 app.post('/upload-item', upload.array('files'), rutasProtegidas,  (req, res)=> {
     console.log(req.files)
     connection.query('INSERT INTO Items (name, username, item, genre, image, description, copyright) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [req.file.name, req.body.username, req.files.data[0], req.file.genre, req.files.data[1], req.file.description, req.file.copyright], (err, response)=>{
+    [req.file.name, req.body.username, req.files[0], req.file.genre, req.files[1], req.file.description, req.file.copyright], (err, response)=>{
         if(err){
             console.log(req.files)
             res.status(500).end();
