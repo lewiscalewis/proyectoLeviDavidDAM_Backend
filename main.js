@@ -844,7 +844,7 @@ app.post('/all-items/', rutasProtegidas, (req, res)=>{
             res.status(500).end();
         }else{
             if(result.length > 0){
-                music = response[0].item;
+                music = result[0].item;
                 fs.readFile("assets/music/"+music, 'binary', function (err, data) {
                     if(err) {
                         console.log('error', err);
