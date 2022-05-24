@@ -674,7 +674,7 @@ app.post('/upload-image', upload.single('image'), rutasProtegidas,  (req, res)=>
     });
 });
 
-app.post('/upload-item', ploadFile.array('files', 2), rutasProtegidas,  (req, res)=> {
+app.post('/upload-item', uploadFile.array('files', 2), rutasProtegidas,  (req, res)=> {
     connection.query('INSERT INTO Items (name, username, item, genre, image, description, copyright) VALUES (?, ?, ?, ?, ?, ?, ?)',
     [req.file.name, req.body.username, req.files.data[0], req.file.genre, req.files.data[1], req.file.description, req.file.copyright], (err, response)=>{
         if(err){
