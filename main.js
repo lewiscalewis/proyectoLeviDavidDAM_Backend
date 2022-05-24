@@ -830,7 +830,7 @@ app.get('/download-item/:itemid', (req, res)=>{
                 res.status(500).end();
             }else{
                 itm = response[0].item;
-                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+itm;
+                var filepath = 'assets/music/'+itm;
 			    			res.sendFile(filepath);
             }
         });
@@ -843,19 +843,7 @@ app.post('/all-items/', rutasProtegidas, (req, res)=>{
             console.error(error);
             res.status(500).end();
         }else{
-            if(result.length > 0){
-                music = result[0].item;
-                fs.readFile("assets/music/"+music, 'binary', function (err, data) {
-                    if(err) {
-                        console.log('error', err);
-                    }else{
-                        var stat = fs.statSync("assets/music/"+music);
-                        res.status(200).send(data)
-                    }
-                });
-            }else{
-                res.status(200).send(result);
-            }
+            res.status(200).send(result)
         }
     });
 });
