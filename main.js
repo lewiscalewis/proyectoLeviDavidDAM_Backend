@@ -453,19 +453,33 @@ app.post('/items-search', rutasProtegidas, (req, res)=>{
 });
 
 app.post('/items-search-genre', rutasProtegidas, (req, res)=>{
-    connection.query(
-        `SELECT *
-        FROM Items I
-        WHERE
-            I.genre = ?`, [req.body.genre], (err, resp)=>
-    {
-        if(err){
-            console.log(err)
-            res.status(500).end()
-        }else{
-            res.status(200).send(resp)
-        }
-    });  
+    if(req.body.genre != "all"){
+        connection.query(
+            `SELECT *
+            FROM Items I
+            WHERE
+                I.genre = ?`, [req.body.genre], (err, resp)=>
+        {
+            if(err){
+                console.log(err)
+                res.status(500).end()
+            }else{
+                res.status(200).send(resp)
+            }
+        });
+    }else{
+        connection.query(
+            `SELECT *
+            FROM Items I`, (err, resp)=>
+        {
+            if(err){
+                console.log(err)
+                res.status(500).end()
+            }else{
+                res.status(200).send(resp)
+            }
+        });
+    }
 });
 
 //petición para recoger todos los usuarios que no sean amigos (MÁX lista de 50 usuarios)
