@@ -418,14 +418,14 @@ app.post('/check-username', (req, res)=>{
     })
 });
 
-//petición para obtener items PARAMETROS: token, username
-app.post('/items', rutasProtegidas, (req, res)=>{
+//petición para obtener items por medio de la barra de búsqueda
+app.post('/items-search', rutasProtegidas, (req, res)=>{
     connection.query(
         `SELECT *
-        FROM Items M
-            INNER JOIN Users U ON U.username = M.owner
+        FROM Items I
         WHERE
-            U.username = ?`, [req.body.username], (err, resp)=>
+            I.name LIKE ? AND
+            I.genre = ?`, ['%'+req.body.item+'%', req.body.genre], (err, resp)=>
     {
         if(err){
             console.log(err)
