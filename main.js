@@ -420,21 +420,37 @@ app.post('/check-username', (req, res)=>{
 
 //petición para obtener items por medio de la barra de búsqueda
 app.post('/items-search', rutasProtegidas, (req, res)=>{
-    var filtro = req.body.genre == "all" ? "" : "AND I.genre = ?"
-    connection.query(
-        `SELECT *
-        FROM Items I
-        WHERE
-            I.name LIKE ?
-            ${filtro}`, ['%'+req.body.item+'%', req.body.genre], (err, resp)=>
-    {
-        if(err){
-            console.log(err)
-            res.status(500).end()
-        }else{
-            res.status(200).send(resp)
-        }
-    });
+    if(req.body.genre == "all"){
+        connection.query(
+            `SELECT *
+            FROM Items I
+            WHERE
+                I.genre = ?
+                ${filtro}`, [req.body.genre], (err, resp)=>
+        {
+            if(err){
+                console.log(err)
+                res.status(500).end()
+            }else{
+                res.status(200).send(resp)
+            }
+        });
+    }else{
+        connection.query(
+            `SELECT *
+            FROM Items I
+            WHERE
+                I.name LIKE ? AND
+                I.genre = ?`, ['%'+req.body.item+'%', req.body.genre], (err, resp)=>
+        {
+            if(err){
+                console.log(err)
+                res.status(500).end()
+            }else{
+                res.status(200).send(resp)
+            }
+        });
+    }
 });
 
 //petición para recoger todos los usuarios que no sean amigos (MÁX lista de 50 usuarios)
