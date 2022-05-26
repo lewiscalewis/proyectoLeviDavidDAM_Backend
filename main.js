@@ -425,8 +425,7 @@ app.post('/items-search', rutasProtegidas, (req, res)=>{
             `SELECT *
             FROM Items I
             WHERE
-                I.genre = ?
-                ${filtro}`, [req.body.genre], (err, resp)=>
+                I.genre = ?`, [req.body.genre], (err, resp)=>
         {
             if(err){
                 console.log(err)
