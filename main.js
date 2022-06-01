@@ -809,59 +809,40 @@ app.post('/getImage', (req, res)=>{
         });
 });
 
-app.post('/tt', (req, res)=>{ 
-var movie = path.resolve('./assets/images/' + /*req.params.filename*/"1651075873596_Screenshot (7).png");
+///////////////////////////////////////////////////////
+//-Parametros (token, itemid)  WWW-URL-ENCODED
+app.post('/getCover', (req, res)=>{ 
+        console.log("/getImage called");
+        var image;
 
-        fs.stat(movie, function (err, stats) {
-
-            var range = req.headers.range;
-
-            if (!range) {
-
-                return res.sendStatus(416);
-
+        connection.query('SELECT image FROM Items WHERE id = ?',[req.body.itemid], (err, response)=>{
+            if(err){
+                console.log(err)
+                res.status(500).end();
+            }else{
+                image = response[0].image;
+                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
+                    if(err) {
+                        console.log('error', err);
+                    }else{
+                         var stat = fs.statSync("assets/covers/"+image);
+                     
+                         /*res.setHeader('Content-Length', stat.size);
+                         res.setHeader('Content-Type', 'image/*');
+                         res.setHeader('Content-Disposition', 'attachment; filename=sample');
+                         res.writeHead(200, {
+                            'Content-Type': 'image/*',
+                            'Content-Length': stat.size,
+                            'Content-Disposition': 'attachment; filename=your_file_name'
+                        });*/
+			
+                         res.status(200).send(data)
+                    }
+                });
             }
-
-            //Chunk logic here
-            var positions = range.replace(/bytes=/, "").split("-");
-            var start = parseInt(positions[0], 10);
-            var total = stats.size;
-            var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-            var chunksize = (end - start) + 1;
-
-            res.writeHead(206, {
-
-                'Transfer-Encoding': 'chunked',
-
-                "Content-Range": "bytes " + start + "-" + end + "/" + total,
-
-                "Accept-Ranges": "bytes",
-
-                "Content-Length": chunksize,
-
-                "Content-Type": mime.lookup(req.params.filename)
-
-            });
-
-            var stream = fs.createReadStream(movie, { start: start, end: end, autoClose: true })
-
-                .on('end', function () {
-
-                    console.log('Stream Done');
-
-                })
-
-                .on("error", function (err) {
-
-                    res.end(err);
-
-                })
-
-                .pipe(res, { end: true });
-
         });
-
 });
+
 
 //test solo
 app.post('/download-image-test', function (req, res) {
