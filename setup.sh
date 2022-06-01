@@ -46,6 +46,11 @@ npm install mysql
 npm install cors
 npm install express
 npm install http
+npm install body-parser
+npm install md5
+npm install multer
+npm install fs
+npm install jsonwebtoken
 
 
 

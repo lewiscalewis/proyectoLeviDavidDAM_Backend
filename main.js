@@ -13,7 +13,7 @@ var fs = require('fs');
 //app.use(express.urlencoded({ extended: false }));
 //app.use(bodyParser.json())
 //app.use(express.json());
-const request = require('request-promise')
+
 //#############################################################################################
 
 let chat;
@@ -170,7 +170,31 @@ app.post('/users', (req, res)=>{
     });
 });
 
+//end-point para borrar usuario
+app.post('/delete-user', rutasProtegidas, (req, res)=>{
+    connection.query('DELETE FROM Users WHERE username = ? AND WHERE ? IN(SELECT * FROM Users WHERE admin = 1)', [req.body.username, req.body.admin], (error, result)=>{
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+            res.status(200).end();
+        }
+    });
+});
 
+//end-point para borrar item
+app.post('/delete-item', rutasProtegidas, (req, res)=>{
+    connection.query('DELETE FROM Items WHERE id = ? AND WHERE ? IN(SELECT * FROM Users WHERE admin = 1)', [req.body.item, req.body.admin], (error, result)=>{
+        if(error){
+            console.error(error);
+            res.status(500).end();
+        }else{
+            res.status(200).end();
+        }
+    });
+});
+
+//end-point para guardar mensaje de chat
 app.post('/save-message', rutasProtegidas, (req, res)=>{
     connection.query(`INSERT INTO Messages (body, date, receptor, emisor) 
     VALUES (
@@ -186,6 +210,7 @@ app.post('/save-message', rutasProtegidas, (req, res)=>{
     });
 });
 
+//end-point para establecer un usuario como logueado
 app.post('/set-online', rutasProtegidas, (req, res)=>{
     var online = req.body.online == 'true' ? true : false
     connection.query(
@@ -200,7 +225,7 @@ app.post('/set-online', rutasProtegidas, (req, res)=>{
     });
 });
 
-
+//end-point para obtener mensajes de chat
 app.post('/get-messages', rutasProtegidas, (req, res)=>{
     connection.query(`
         SELECT * 
