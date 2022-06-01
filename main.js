@@ -809,39 +809,6 @@ app.post('/getImage', (req, res)=>{
         });
 });
 
-///////////////////////////////////////////////////////
-//-Parametros (token, itemid)  WWW-URL-ENCODED
-app.post('/getCover', (req, res)=>{ 
-        console.log("/getCover called");
-        var image;
-
-        connection.query('SELECT image FROM Items WHERE id = ?',[req.body.itemid], (err, response)=>{
-            if(err){
-                console.log(err)
-                res.status(500).end();
-            }else{
-                image = response[0].image;
-                fs.readFile("assets/images/"+image, 'binary', function (err, data) {
-                    if(err) {
-                        console.log('error', err);
-                    }else{
-                         var stat = fs.statSync("assets/images/"+image);
-                     
-                         /*res.setHeader('Content-Length', stat.size);
-                         res.setHeader('Content-Type', 'image/*');
-                         res.setHeader('Content-Disposition', 'attachment; filename=sample');
-                         res.writeHead(200, {
-                            'Content-Type': 'image/*',
-                            'Content-Length': stat.size,
-                            'Content-Disposition': 'attachment; filename=your_file_name'
-                        });*/
-			
-                         res.status(200).send(data)
-                    }
-                });
-            }
-        });
-});
 
 
 //test solo
@@ -852,7 +819,25 @@ app.post('/download-image-test', function (req, res) {
     res.sendFile(filepath);
 });
 
-		
+//Parametros:
+	//token
+	//username		nombre de usuario
+//Endpoint de David para descargar 1 imagen de perfil.
+app.post('/download-cover', rutasProtegidas, (req, res)=>{ 
+        console.log("/download-cover called");
+        var image;
+
+        connection.query('SELECT image FROM Items WHERE image = ?',[req.body.itemid], (err, response)=>{
+            if(err){
+                console.log(err)
+                res.status(500).end();
+            }else{
+                image = response[0].image;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
+			    			res.sendFile(filepath);
+            }
+        });
+});		
 		
 	
 //Parametros:
