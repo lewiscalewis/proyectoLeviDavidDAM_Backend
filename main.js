@@ -812,7 +812,7 @@ app.post('/getImage', (req, res)=>{
 ///////////////////////////////////////////////////////
 //-Parametros (token, itemid)  WWW-URL-ENCODED
 app.post('/getCover', (req, res)=>{ 
-        console.log("/getImage called");
+        console.log("/getCover called");
         var image;
 
         connection.query('SELECT image FROM Items WHERE id = ?',[req.body.itemid], (err, response)=>{
@@ -825,7 +825,7 @@ app.post('/getCover', (req, res)=>{
                     if(err) {
                         console.log('error', err);
                     }else{
-                         var stat = fs.statSync("assets/covers/"+image);
+                         var stat = fs.statSync("assets/images/"+image);
                      
                          /*res.setHeader('Content-Length', stat.size);
                          res.setHeader('Content-Type', 'image/*');
