@@ -827,7 +827,7 @@ app.post('/download-cover', rutasProtegidas, (req, res)=>{
         console.log("/download-cover called");
         var image;
 
-        connection.query('SELECT image FROM Items WHERE image = ?',[req.body.itemid], (err, response)=>{
+        connection.query('SELECT image FROM Items WHERE id = ?',[req.body.itemid], (err, response)=>{
             if(err){
                 console.log(err)
                 res.status(500).end();
