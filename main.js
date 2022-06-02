@@ -833,7 +833,7 @@ app.post('/download-cover', rutasProtegidas, (req, res)=>{
                 res.status(500).end();
             }else{
                 image = response[0].image;
-                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/images/'+image;
+                var filepath = '/home/usuario/proyectoLeviDavidDAM_Backend/assets/music/'+image;
 			    			res.sendFile(filepath);
             }
         });
