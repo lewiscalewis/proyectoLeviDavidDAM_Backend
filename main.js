@@ -753,7 +753,7 @@ app.post('/upload-item', uploadFile.array('multiple-files'), rutasProtegidas,  (
     console.log(req.files)
     date = `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`
     connection.query('INSERT INTO Items (name, username, item, genre, image, description, copyright, uploadDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [req.body.name, req.body.username, datetime_item+"_"+req.files[0].originalname, req.body.genre, req.files[1].originalname, req.body.description, req.body.copyright, date], (err, response)=>{
+    [req.body.name, req.body.username, datetime_item+"_"+req.files[0].originalname, req.body.genre, datetime_item+"_"+req.files[1].originalname, req.body.description, req.body.copyright, date], (err, response)=>{
         if(err){
             console.log(err)
             res.status(500).end();
