@@ -184,7 +184,7 @@ app.post('/delete-user', rutasProtegidas, (req, res)=>{
 
 //end-point para borrar item
 app.post('/delete-item', rutasProtegidas, (req, res)=>{
-    connection.query('DELETE FROM Items WHERE id = ? AND WHERE ? IN(SELECT * FROM Users WHERE admin = 1)', [req.body.item, req.body.admin], (error, result)=>{
+    connection.query('DELETE FROM Items WHERE id = ?', [req.body.item], (error, result)=>{
         if(error){
             console.error(error);
             res.status(500).end();
