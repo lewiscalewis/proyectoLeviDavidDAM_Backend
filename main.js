@@ -172,7 +172,7 @@ app.post('/users', (req, res)=>{
 
 //end-point para borrar usuario
 app.post('/delete-user', rutasProtegidas, (req, res)=>{
-    connection.query('DELETE FROM Users WHERE username = ? AND ? IN(SELECT username FROM Users WHERE admin = 1)', [req.body.username, req.body.admin], (error, result)=>{
+    connection.query('DELETE FROM Users WHERE username = ?', [req.body.username], (error, result)=>{
         if(error){
             console.error(error);
             res.status(500).end();
