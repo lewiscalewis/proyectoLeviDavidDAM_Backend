@@ -184,6 +184,7 @@ app.post('/delete-user', rutasProtegidas, (req, res)=>{
 
 //end-point para borrar item
 app.post('/delete-item', rutasProtegidas, (req, res)=>{
+	console.log("delete item called");
     connection.query('DELETE FROM Items WHERE id = ?', [req.body.item], (error, result)=>{
         if(error){
             console.error(error);
