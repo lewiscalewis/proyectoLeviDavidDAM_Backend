@@ -54,6 +54,14 @@ npm install jsonwebtoken
 
 
 
+#npm COMPLETO############ //alomejor falta alguno de arriba
+npm install express
+npm install cors
+npm install mysql
+npm install jsonwebtoken
+npm install md5
+npm install multer
+npm install socket.io
 
 
 
