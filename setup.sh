@@ -1,8 +1,8 @@
 #Join hamachi network
 sudo apt install logmein-hamachi
 sudo hamachi login
-sudo hamachi join 465-709-324
-#Te pedirá la contraseña de la red: estareddasida
+sudo hamachi join {ID****}
+#Te pedirá la contraseña de la red: **************
 
 
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Solo para el desarrollo.
